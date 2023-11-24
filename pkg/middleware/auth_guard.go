@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"strings"
 	"time"
 
 	"GoRestify/pkg/dictionary"
@@ -23,18 +22,15 @@ func JwtAuthGuard() gin.HandlerFunc {
 
 	return func(c *gin.Context) {
 
-		token := strings.TrimSpace(c.Query("token"))
-		if token == "" {
-			tokenArr, ok := c.Request.Header["Authorization"]
-			if !ok || len(tokenArr[0]) <= 7 {
-				err := pkg_err.New(pkg_err.TokenIsRequired, "E7175511").
-					Custom(pkg_err.UnauthorizedErr).
-					Message(pkg_err.SomethingWentWrong).Build()
-				response.New(c).Error(err).Abort().JSON()
-				return
-			}
-			token = tokenArr[0][7:]
+		tokenArr, ok := c.Request.Header["Authorization"]
+		if !ok || len(tokenArr[0]) <= 7 {
+			err := pkg_err.New(pkg_err.TokenIsRequired, "E7175511").
+				Custom(pkg_err.UnauthorizedErr).
+				Message(pkg_err.SomethingWentWrong).Build()
+			response.New(c).Error(err).Abort().JSON()
+			return
 		}
+		token := tokenArr[0][7:]
 
 		claims := &pkg_types.JWTClaims{}
 

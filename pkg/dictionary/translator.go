@@ -5,8 +5,8 @@ import (
 	"strings"
 )
 
-// SafeTranslate it return word with translate
-func SafeTranslate(lang Lang, str string, params ...interface{}) string {
+// safeTranslate it return word with translate
+func safeTranslate(lang Lang, str string, params ...interface{}) string {
 
 	term, ok := thisTerms[strings.ToLower(str)]
 	pattern := str
@@ -45,5 +45,5 @@ func SafeTranslate(lang Lang, str string, params ...interface{}) string {
 func Translate(lang Lang, str string, params ...interface{}) string {
 
 	str = strings.ReplaceAll(str, "!!!", "")
-	return SafeTranslate(lang, str, params...)
+	return safeTranslate(lang, str, params...)
 }
