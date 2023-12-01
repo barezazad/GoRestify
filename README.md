@@ -8,7 +8,7 @@
 
 Welcome to the GoRestify Backend Boilerplate, a professional and organized starting point for your GoLang backend projects.
 
-![GoRestify](./GoRestify.png)
+![GoRestify](./GoRestify.webp)
 
 
 
