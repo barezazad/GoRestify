@@ -29,6 +29,26 @@ func InitBaseRegionAPI(e *core.Engine) base_api.RegionAPI {
 	return regionAPI
 }
 
+func InitBaseRoleAPI(e *core.Engine) base_api.RoleAPI {
+	roleRepo := base_repo.ProvideRoleRepo(e)
+	baseRoleServ := service.ProvideBaseRoleService(roleRepo)
+	roleAPI := base_api.ProvideRoleAPI(baseRoleServ)
+	return roleAPI
+}
+
+func InitBaseUserAPI(e *core.Engine) base_api.UserAPI {
+	userRepo := base_repo.ProvideUserRepo(e)
+	baseUserServ := service.ProvideBaseUserService(userRepo)
+	userAPI := base_api.ProvideUserAPI(baseUserServ)
+	return userAPI
+}
+
+func InitBaseAuthAPI(e *core.Engine) base_api.AuthAPI {
+	baseAuthServ := service.ProvideBaseAuthService(e)
+	authAPI := base_api.ProvideAuthAPI(baseAuthServ)
+	return authAPI
+}
+
 func InitBasePkgAPI(e *core.Engine) base_api.PkgAPI {
 	pkgAPI := base_api.ProvidePkgAPI(e)
 	return pkgAPI

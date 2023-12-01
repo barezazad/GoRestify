@@ -19,6 +19,8 @@ func Insert(engine *core.Engine) {
 	table.InsertSettings()
 	setting.LoadSetting(domain_app.Admin)
 
+	table.InsertRoles(engine)
+	table.InsertUsers(engine)
 	table.InsertRegions(engine)
 	table.InsertCities(engine)
 

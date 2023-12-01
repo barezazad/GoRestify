@@ -3,6 +3,7 @@ package pkg_redis
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/go-redis/redis/v8"
 )
@@ -22,6 +23,9 @@ func ConnectRedis(address string, displayLog bool) (redisCon RedisCon, err error
 	if err != nil {
 		return
 	}
+
+	opt.PoolSize = 5000
+	opt.PoolTimeout = 30 * time.Second
 
 	redisCon.client = redis.NewClient(opt)
 	var ping string

@@ -31,6 +31,7 @@ const (
 	MinimumAcceptedValueForXIsX                             = "minimum accepted value for %v is %v"
 	MaximumAcceptedValueForXIsX                             = "maximum accepted value for %v is %v"
 	YouDontHavePermission                                   = "you don't have permission"
+	YouDontHavePermissionToThisX                            = "you don't have permission to this %v"
 	PleaseLoginAgain                                        = "please login again"
 	TimeoutHappened                                         = "timeout happened"
 	TemporaryRedirect                                       = "temporary redirect"

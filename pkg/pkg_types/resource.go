@@ -20,5 +20,5 @@ func ResourceJoin(resources []Resource) string {
 		strArr = append(strArr, string(v))
 	}
 
-	return strings.Join(strArr, ", ")
+	return strings.Join(strArr, ",")
 }

@@ -18,6 +18,8 @@ const (
 	RedisCacheAPI pkg_types.Envkey = "CORE_REDIS_CACHE_API"
 
 	JWTSecretKey pkg_types.Envkey = "CORE_JWT_SECRET_KEY"
+
+	PasswordSalt pkg_types.Envkey = "CORE_PASSWORD_SALT"
 )
 
 // ListAdminEnv list of env for admin
@@ -32,6 +34,10 @@ var ListAdminEnv = []pkg_types.Envkey{
 	DatabaseActivityDSN,
 
 	RedisCacheAPI,
+
+	JWTSecretKey,
+
+	PasswordSalt,
 }
 
 // ListUserEnv list of env for user
@@ -42,6 +48,10 @@ var ListUserEnv = []pkg_types.Envkey{
 	DatabaseDataDSN,
 
 	RedisCacheAPI,
+
+	JWTSecretKey,
+
+	PasswordSalt,
 }
 
 // LoadEnvs load environment from env file

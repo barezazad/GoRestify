@@ -18,6 +18,12 @@ func onMigrate(err error) {
 func Migrate(engine *core.Engine) {
 
 	// Base Domain
+
+	onMigrate(engine.DB.Table(base_model.RoleTable).AutoMigrate(&base_model.Role{}))
+
+	onMigrate(engine.DB.Table(base_model.UserTable).AutoMigrate(&base_model.User{}))
+	engine.DB.Exec(pkg_sql.ForeignKey(base_model.UserTable, base_model.RoleTable, "role_id"))
+
 	onMigrate(engine.DB.Table(base_model.RegionTable).AutoMigrate(&base_model.Region{}))
 
 	onMigrate(engine.DB.Table(base_model.CityTable).AutoMigrate(&base_model.City{}))

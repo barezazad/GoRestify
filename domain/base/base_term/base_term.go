@@ -13,4 +13,8 @@ const (
 
 	User  = "user"
 	Users = "users"
+
+	Auth                      = "auth"
+	UsernameOrPasswordIsWrong = "username or password is wrong"
+	UserLoggedInSuccessfully  = "user logged in successfully"
 )
