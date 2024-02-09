@@ -10,7 +10,6 @@ import (
 	"GoRestify/pkg/param"
 	"GoRestify/pkg/pkg_err"
 	"GoRestify/pkg/pkg_log"
-	"GoRestify/pkg/pkg_password"
 	"GoRestify/pkg/tx"
 
 	"GoRestify/pkg/validator"
@@ -48,17 +47,6 @@ func (s *BaseUserServ) FindByID(tx tx.Tx, id uint) (user base_model.User, err er
 	return
 }
 
-// FindByUsername for getting user by its username
-func (s *BaseUserServ) FindByUsername(tx tx.Tx, username string) (user base_model.User, err error) {
-
-	if user, err = s.Repo.FindByUsername(tx, username); err != nil {
-		pkg_err.Log(err, "E1167315", "can't fetch the user", username)
-		return
-	}
-
-	return
-}
-
 // GetAll of users, it supports pagination and search and return count
 func (s *BaseUserServ) GetAll(params param.Param) (users []base_model.User, err error) {
 
@@ -70,10 +58,6 @@ func (s *BaseUserServ) GetAll(params param.Param) (users []base_model.User, err 
 	if users, err = s.Repo.List(params); err != nil {
 		pkg_log.CheckError(err, "error in users list")
 		return
-	}
-
-	for i := range users {
-		users[i].Password = ""
 	}
 
 	err = s.Engine.RedisCacheAPI.Set(base_term.Users, users)
@@ -88,10 +72,6 @@ func (s *BaseUserServ) List(params param.Param) (users []base_model.User,
 	if users, err = s.Repo.List(params); err != nil {
 		pkg_log.CheckError(err, "error in users list")
 		return
-	}
-
-	for i := range users {
-		users[i].Password = ""
 	}
 
 	if count, err = s.Repo.Count(params); err != nil {
@@ -109,17 +89,10 @@ func (s *BaseUserServ) Create(tx tx.Tx, user base_model.User) (createdUser base_
 		return
 	}
 
-	if user.Password, err = pkg_password.Hash(user.Password, s.Engine.Envs[core.PasswordSalt]); err != nil {
-		err = pkg_err.Log(err, "E1181138", "error in hashing password", user)
-		return
-	}
-
 	if createdUser, err = s.Repo.Create(tx, user); err != nil {
 		pkg_err.Log(err, "E1198014", "error in creating user", user)
 		return
 	}
-
-	createdUser.Password = ""
 
 	s.Engine.RedisCacheAPI.Delete(base_term.Users)
 
@@ -139,21 +112,10 @@ func (s *BaseUserServ) Save(tx tx.Tx, user base_model.User) (updatedUser, userBe
 		return
 	}
 
-	if user.Password != "" {
-		if user.Password, err = pkg_password.Hash(user.Password, s.Engine.Envs[core.PasswordSalt]); err != nil {
-			err = pkg_err.Log(err, "E1115211", "error in hashing password", user)
-			return
-		}
-	} else {
-		user.Password = userBefore.Password
-	}
-
 	if updatedUser, err = s.Repo.Save(tx, user); err != nil {
 		pkg_err.Log(err, "E1141555", "user not saved")
 		return
 	}
-
-	updatedUser.Password = ""
 
 	key := fmt.Sprintf("%v-%v", base_term.User, updatedUser.ID)
 	if err = s.Engine.RedisCacheAPI.Delete(key); err != nil {

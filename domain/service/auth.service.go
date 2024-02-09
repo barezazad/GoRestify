@@ -42,7 +42,8 @@ func (s *BaseAuthServ) Login(tx tx.Tx, auth base_model.Auth) (user base_model.Us
 
 	jwtKey := s.Engine.Envs.ToByte(core.JWTSecretKey)
 
-	if user, err = BaseUserService.FindByUsername(tx, auth.Username); err != nil {
+	var account base_model.Account
+	if account, err = BaseAccountService.FindByUsername(tx, auth.Username); err != nil {
 		err = pkg_err.Log(err, "E1130152", "can't fetch the user by username")
 		return
 	}
@@ -53,7 +54,7 @@ func (s *BaseAuthServ) Login(tx tx.Tx, auth base_model.Auth) (user base_model.Us
 		return
 	}
 
-	if !pkg_password.Verify(auth.Password, user.Password, s.Engine.Envs[core.PasswordSalt]) {
+	if !pkg_password.Verify(auth.Password, account.Password, s.Engine.Envs[core.PasswordSalt]) {
 		err = pkg_err.New(base_term.UsernameOrPasswordIsWrong, "E1169512").
 			Message(base_term.UsernameOrPasswordIsWrong).Build()
 		return
@@ -62,9 +63,9 @@ func (s *BaseAuthServ) Login(tx tx.Tx, auth base_model.Auth) (user base_model.Us
 	expirationTime := time.Now().Add(12 * time.Hour)
 	claims := &pkg_types.JWTClaims{
 		UserID:   user.ID,
-		Username: user.Username,
-		Email:    user.Email,
-		Phone:    user.Phone,
+		Username: account.Username,
+		Email:    account.Email,
+		Phone:    account.Phone,
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(expirationTime),
 		},
@@ -72,13 +73,13 @@ func (s *BaseAuthServ) Login(tx tx.Tx, auth base_model.Auth) (user base_model.Us
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
-	if user.Token, err = token.SignedString(jwtKey); err != nil {
+	if account.Token, err = token.SignedString(jwtKey); err != nil {
 		err = pkg_err.Log(err, "E1147810", "error generating token")
 		return
 	}
 
-	user.Resources = strings.Split(role.Resources, ",")
-	user.Password = ""
+	account.Resources = strings.Split(role.Resources, ",")
+	account.Password = ""
 	user.Role = role.Name
 
 	key := fmt.Sprintf("%v-%v", base_term.Auth, user.ID)

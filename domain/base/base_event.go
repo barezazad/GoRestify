@@ -19,6 +19,12 @@ const (
 	ListRegion   pkg_types.Event = "region-list"
 	ViewRegion   pkg_types.Event = "region-view"
 
+	CreateAccount pkg_types.Event = "account-create"
+	UpdateAccount pkg_types.Event = "account-update"
+	DeleteAccount pkg_types.Event = "account-delete"
+	ListAccount   pkg_types.Event = "account-list"
+	ViewAccount   pkg_types.Event = "account-view"
+
 	CreateRole pkg_types.Event = "role-create"
 	UpdateRole pkg_types.Event = "role-update"
 	DeleteRole pkg_types.Event = "role-delete"

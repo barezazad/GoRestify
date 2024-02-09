@@ -2,6 +2,7 @@ package server
 
 import (
 	"GoRestify/cmd/wire"
+	"GoRestify/domain/acc"
 	"GoRestify/domain/base"
 	"GoRestify/internal/core"
 	"GoRestify/internal/core/check_access"
@@ -15,12 +16,16 @@ import (
 // Route trigger router and api methods
 func Route(rg gin.RouterGroup, engine *core.Engine) {
 
+	// base domain
 	baseAuthAPI := wire.InitBaseAuthAPI(engine)
 	baseRoleAPI := wire.InitBaseRoleAPI(engine)
-	baseUserAPI := wire.InitBaseUserAPI(engine)
+	baseAccountAPI := wire.InitBaseAccountAPI(engine)
 	baseRegionAPI := wire.InitBaseRegionAPI(engine)
 	baseCityAPI := wire.InitBaseCityAPI(engine)
 	PkgAPI := wire.InitBasePkgAPI(engine)
+
+	// acc domain
+	accTransactionAPI := wire.InitAccTransactionAPI(engine)
 
 	// set X-Domain domain name, to filter APIs base on domain
 	rg.Use(middleware.SetDomainInHeader(domain_app.Admin))
@@ -39,6 +44,13 @@ func Route(rg gin.RouterGroup, engine *core.Engine) {
 		rg.PUT("/clear-cache/user/:userID", check_access.IsAllow(base.SettingWrite), PkgAPI.RedisClearCacheToUser)
 
 		// Base Domain
+		rg.GET("/accounts", check_access.IsAllow(base.AccountRead), baseAccountAPI.List)
+		rg.GET("/all/accounts", check_access.IsAllow(base.AccountRead), baseAccountAPI.GetAll)
+		rg.GET("/accounts/:accountID", check_access.IsAllow(base.AccountRead), baseAccountAPI.FindByID)
+		rg.POST("/accounts", check_access.IsAllow(base.AccountWrite), baseAccountAPI.Create)
+		rg.PUT("/accounts/:accountID", check_access.IsAllow(base.AccountWrite), baseAccountAPI.Update)
+		rg.DELETE("/accounts/:accountID", check_access.IsAllow(base.AccountWrite), baseAccountAPI.Delete)
+
 		rg.GET("/roles", check_access.IsAllow(base.RoleRead), baseRoleAPI.List)
 		rg.GET("/resources", check_access.IsAllow(base.RoleRead), baseRoleAPI.GetResources)
 		rg.GET("/all/roles", check_access.IsAllow(base.RoleRead), baseRoleAPI.GetAll)
@@ -46,13 +58,6 @@ func Route(rg gin.RouterGroup, engine *core.Engine) {
 		rg.POST("/roles", check_access.IsAllow(base.RoleWrite), baseRoleAPI.Create)
 		rg.PUT("/roles/:roleID", check_access.IsAllow(base.RoleWrite), baseRoleAPI.Update)
 		rg.DELETE("/roles/:roleID", check_access.IsAllow(base.RoleWrite), baseRoleAPI.Delete)
-
-		rg.GET("/users", check_access.IsAllow(base.UserRead), baseUserAPI.List)
-		rg.GET("/all/users", check_access.IsAllow(base.UserRead), baseUserAPI.GetAll)
-		rg.GET("/users/:userID", check_access.IsAllow(base.UserRead), baseUserAPI.FindByID)
-		rg.POST("/users", check_access.IsAllow(base.UserWrite), baseUserAPI.Create)
-		rg.PUT("/users/:userID", check_access.IsAllow(base.UserWrite), baseUserAPI.Update)
-		rg.DELETE("/users/:userID", check_access.IsAllow(base.UserWrite), baseUserAPI.Delete)
 
 		rg.GET("/cities", check_access.IsAllow(base.CityRead), baseCityAPI.List)
 		rg.GET("/all/cities", check_access.IsAllow(base.CityRead), baseCityAPI.GetAll)
@@ -68,6 +73,14 @@ func Route(rg gin.RouterGroup, engine *core.Engine) {
 		rg.POST("/regions", check_access.IsAllow(base.RegionWrite), baseRegionAPI.Create)
 		rg.PUT("/regions/:regionID", check_access.IsAllow(base.RegionWrite), baseRegionAPI.Update)
 		rg.DELETE("/regions/:regionID", check_access.IsAllow(base.RegionWrite), baseRegionAPI.Delete)
+
+		// acc domain
+		rg.GET("/transactions", check_access.IsAllow(acc.TransactionRead), accTransactionAPI.List)
+		rg.GET("/all/transactions", check_access.IsAllow(acc.TransactionRead), accTransactionAPI.GetAll)
+		rg.GET("/transactions/:transactionID", check_access.IsAllow(acc.TransactionRead), accTransactionAPI.FindByID)
+		rg.POST("/transactions", check_access.IsAllow(acc.TransactionWrite), accTransactionAPI.Create)
+		rg.PUT("/transactions/:transactionID", check_access.IsAllow(acc.TransactionWrite), accTransactionAPI.Update)
+		rg.DELETE("/transactions/:transactionID", check_access.IsAllow(acc.TransactionWrite), accTransactionAPI.Delete)
 
 	}
 }

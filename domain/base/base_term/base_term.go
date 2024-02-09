@@ -8,6 +8,9 @@ const (
 	Region  = "region"
 	Regions = "regions"
 
+	Account  = "account"
+	Accounts = "accounts"
+
 	Role  = "role"
 	Roles = "roles"
 

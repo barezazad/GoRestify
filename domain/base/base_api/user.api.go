@@ -43,7 +43,6 @@ func (a *UserAPI) FindByID(c *gin.Context) {
 		resp.Error(err).JSON()
 		return
 	}
-	user.Password = ""
 
 	resp.Record(base.ViewUser)
 	resp.Status(http.StatusOK).

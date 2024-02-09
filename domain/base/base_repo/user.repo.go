@@ -49,24 +49,6 @@ func (r *UserRepo) FindByID(tx tx.Tx, id uint) (user base_model.User, err error)
 	return
 }
 
-// FindByUsername finds the user via its username
-func (r *UserRepo) FindByUsername(tx tx.Tx, username string) (user base_model.User, err error) {
-
-	var colsStr string
-	if colsStr, err = validator.CheckColumns(r.Cols, "*"); err != nil {
-		err = pkg_err.Take(err, "E1126008").Build()
-		return
-	}
-
-	err = tx.GetDB(r.Engine.DB, true).Table(base_model.UserTable).Select(colsStr).
-		Joins("INNER JOIN base_roles ON base_users.role_id = base_roles.id").
-		Where("base_users.username = ?", username).
-		First(&user).Error
-
-	err = db_error.Parse(err, base_term.Users, validator.Find)
-	return
-}
-
 // GetUserResources is used for finding all resources
 func (r *UserRepo) GetUserResources(userID uint) (resourceList base_model.ResourceList, err error) {
 

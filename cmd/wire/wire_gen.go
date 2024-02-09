@@ -7,6 +7,8 @@
 package wire
 
 import (
+	"GoRestify/domain/acc/acc_api"
+	"GoRestify/domain/acc/acc_repo"
 	"GoRestify/domain/base/base_api"
 	"GoRestify/domain/base/base_repo"
 	"GoRestify/domain/service"
@@ -15,6 +17,7 @@ import (
 
 // Injectors from wire.go:
 
+// Base Domain
 func InitBaseCityAPI(e *core.Engine) base_api.CityAPI {
 	cityRepo := base_repo.ProvideCityRepo(e)
 	baseCityServ := service.ProvideBaseCityService(cityRepo)
@@ -27,6 +30,13 @@ func InitBaseRegionAPI(e *core.Engine) base_api.RegionAPI {
 	baseRegionServ := service.ProvideBaseRegionService(regionRepo)
 	regionAPI := base_api.ProvideRegionAPI(baseRegionServ)
 	return regionAPI
+}
+
+func InitBaseAccountAPI(e *core.Engine) base_api.AccountAPI {
+	accountRepo := base_repo.ProvideAccountRepo(e)
+	baseAccountServ := service.ProvideBaseAccountService(accountRepo)
+	accountAPI := base_api.ProvideAccountAPI(baseAccountServ)
+	return accountAPI
 }
 
 func InitBaseRoleAPI(e *core.Engine) base_api.RoleAPI {
@@ -52,4 +62,12 @@ func InitBaseAuthAPI(e *core.Engine) base_api.AuthAPI {
 func InitBasePkgAPI(e *core.Engine) base_api.PkgAPI {
 	pkgAPI := base_api.ProvidePkgAPI(e)
 	return pkgAPI
+}
+
+// Acc Domain
+func InitAccTransactionAPI(e *core.Engine) acc_api.TransactionAPI {
+	transactionRepo := acc_repo.ProvideTransactionRepo(e)
+	accTransactionServ := service.ProvideAccTransactionService(transactionRepo)
+	transactionAPI := acc_api.ProvideTransactionAPI(accTransactionServ)
+	return transactionAPI
 }

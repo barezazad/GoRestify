@@ -15,6 +15,9 @@ const (
 	RegionWrite pkg_types.Resource = "region:write"
 	RegionRead  pkg_types.Resource = "region:read"
 
+	AccountWrite pkg_types.Resource = "account:write"
+	AccountRead  pkg_types.Resource = "account:read"
+
 	RoleWrite pkg_types.Resource = "role:write"
 	RoleRead  pkg_types.Resource = "role:read"
 

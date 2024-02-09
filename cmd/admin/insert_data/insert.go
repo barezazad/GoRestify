@@ -20,7 +20,7 @@ func Insert(engine *core.Engine) {
 	setting.LoadSetting(domain_app.Admin)
 
 	table.InsertRoles(engine)
-	table.InsertUsers(engine)
+	table.InsertAccounts(engine)
 	table.InsertRegions(engine)
 	table.InsertCities(engine)
 
