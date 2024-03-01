@@ -15,7 +15,7 @@ const (
 type Transaction struct {
 	ID          uint             `json:"id,omitempty"`
 	SenderID    uint             `gorm:"index:sender_id_idx;not null" json:"sender_id,omitempty" bind:"required"`
-	ReceiverID  uint             `gorm:"index:receiver_id_idx;not null" json:"receiver_id,omitempty" `
+	ReceiverID  uint             `gorm:"index:receiver_id_idx;not null" json:"receiver_id,omitempty" bind:"required"`
 	CurrencyID  uint             `gorm:"index;not null" json:"currency_id,omitempty" bind:"required"`
 	Type        pkg_types.Enum   `gorm:"type:varchar(50);not null;" json:"type,omitempty" bind:"required,one_of=transaction_type"`
 	Hash        string           `gorm:"index:hash_idx;type:varchar(70);" json:"hash,omitempty" bind:""`

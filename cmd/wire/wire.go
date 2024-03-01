@@ -62,3 +62,21 @@ func InitAccTransactionAPI(e *core.Engine) acc_api.TransactionAPI {
 		acc_api.ProvideTransactionAPI)
 	return acc_api.TransactionAPI{}
 }
+
+func InitAccSlotAPI(e *core.Engine) acc_api.SlotAPI {
+	wire.Build(acc_repo.ProvideSlotRepo, service.ProvideAccSlotService,
+		acc_api.ProvideSlotAPI)
+	return acc_api.SlotAPI{}
+}
+
+func InitAccCurrencyAPI(e *core.Engine) acc_api.CurrencyAPI {
+	wire.Build(acc_repo.ProvideCurrencyRepo, service.ProvideAccCurrencyService,
+		acc_api.ProvideCurrencyAPI)
+	return acc_api.CurrencyAPI{}
+}
+
+func InitAccAccountCreditAPI(e *core.Engine) acc_api.AccountCreditAPI {
+	wire.Build(acc_repo.ProvideAccountCreditRepo, service.ProvideAccAccountCreditService,
+		acc_api.ProvideAccountCreditAPI)
+	return acc_api.AccountCreditAPI{}
+}

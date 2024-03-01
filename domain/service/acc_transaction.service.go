@@ -13,6 +13,8 @@ import (
 	"GoRestify/pkg/tx"
 
 	"GoRestify/pkg/validator"
+
+	"github.com/google/uuid"
 )
 
 // AccTransactionServ for injecting  acc_repo
@@ -77,6 +79,84 @@ func (s *AccTransactionServ) List(params param.Param) (transactions []acc_model.
 	if count, err = s.Repo.Count(params); err != nil {
 		pkg_log.CheckError(err, "error in transactions count")
 	}
+
+	return
+}
+
+// DoTransaction a transaction
+func (s *AccTransactionServ) DoTransaction(tx tx.Tx, transaction acc_model.Transaction) (createdTransaction acc_model.Transaction, err error) {
+
+	if err = validator.ValidateModel(transaction, acc_term.Transaction, validator.Create); err != nil {
+		err = pkg_err.TickValidate(err, "E1680067", pkg_err.ValidationFailed, transaction)
+		return
+	}
+
+	// calculate fee and net amount
+	transaction.NetAmount = transaction.Amount.Num().Sub(transaction.Fee.Num()).Build()
+
+	// set transaction hash
+	transaction.Hash = uuid.New().String()
+
+	if createdTransaction, err = s.Repo.Create(tx, transaction); err != nil {
+		pkg_err.Log(err, "E1626674", "error in creating transaction", transaction)
+		return
+	}
+
+	for _, v := range transaction.Slots {
+
+		// get account Credit
+		var accountCredit acc_model.AccountCredit
+		tx.IsLock = true
+		if accountCredit, err = AccAccountCreditService.FindByAccountIDAndCurrency(tx, v.AccountID, v.CurrencyID); err != nil {
+			err = pkg_err.Log(err, "E1118793", "sender account not found")
+			return
+		}
+		tx.IsLock = false
+
+		// check if does have enough balance
+		if !v.Credit.Num().IsZero() {
+			// check balance with the amount
+			if accountCredit.Balance.Num().Abs().LessThan(v.Credit.Num()) {
+				err = pkg_err.New(acc_term.YouHaveNotEnoughCredit, "E1099045", "you have not enough balance", accountCredit.AccountID).
+					Message(acc_term.YouHaveNotEnoughCredit).Custom(pkg_err.BadRequestErr).Build()
+				return
+			}
+		}
+
+		// save latest credit
+		remainBalance := accountCredit.Balance.Num().Add(v.Debit.Num()).Sub(v.Credit.Num()).Build()
+		accountCredit.Balance = remainBalance
+
+		if _, _, err = AccAccountCreditService.Save(tx, accountCredit); err != nil {
+			err = pkg_err.New(pkg_err.SomethingWentWrong, "E1167734", "error in updating credit account", accountCredit).
+				Message(pkg_err.SomethingWentWrong).
+				Custom(pkg_err.InternalServerErr).Build()
+			return
+		}
+
+		// add slot
+		slot := acc_model.Slot{
+			TransactionID: createdTransaction.ID,
+			AccountID:     v.AccountID,
+			CurrencyID:    v.CurrencyID,
+			Credit:        v.Credit,
+			Debit:         v.Debit,
+			Balance:       remainBalance,
+		}
+
+		if slot, err = AccSlotService.Create(tx, slot); err != nil {
+			err = pkg_err.New(pkg_err.SomethingWentWrong, "E1159619", "error in creating sender slot", slot).
+				Message(pkg_err.SomethingWentWrong).
+				Custom(pkg_err.InternalServerErr).Build()
+			return
+		}
+
+		createdTransaction.Slots = append(createdTransaction.Slots, slot)
+
+	}
+
+	// ignore slots
+	transaction.Slots = nil
 
 	return
 }

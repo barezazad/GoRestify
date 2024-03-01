@@ -26,6 +26,7 @@ func Route(rg gin.RouterGroup, engine *core.Engine) {
 
 	// acc domain
 	accTransactionAPI := wire.InitAccTransactionAPI(engine)
+	accCurrencyAPI := wire.InitAccCurrencyAPI(engine)
 
 	// set X-Domain domain name, to filter APIs base on domain
 	rg.Use(middleware.SetDomainInHeader(domain_app.Admin))
@@ -75,6 +76,13 @@ func Route(rg gin.RouterGroup, engine *core.Engine) {
 		rg.DELETE("/regions/:regionID", check_access.IsAllow(base.RegionWrite), baseRegionAPI.Delete)
 
 		// acc domain
+		rg.GET("/currencies", check_access.IsAllow(acc.CurrencyRead), accCurrencyAPI.List)
+		rg.GET("/all/currencies", check_access.IsAllow(acc.CurrencyRead), accCurrencyAPI.GetAll)
+		rg.GET("/currencies/:currencyID", check_access.IsAllow(acc.CurrencyRead), accCurrencyAPI.FindByID)
+		rg.POST("/currencies", check_access.IsAllow(acc.CurrencyWrite), accCurrencyAPI.Create)
+		rg.PUT("/currencies/:currencyID", check_access.IsAllow(acc.CurrencyWrite), accCurrencyAPI.Update)
+		rg.DELETE("/currencies/:currencyID", check_access.IsAllow(acc.CurrencyWrite), accCurrencyAPI.Delete)
+
 		rg.GET("/transactions", check_access.IsAllow(acc.TransactionRead), accTransactionAPI.List)
 		rg.GET("/all/transactions", check_access.IsAllow(acc.TransactionRead), accTransactionAPI.GetAll)
 		rg.GET("/transactions/:transactionID", check_access.IsAllow(acc.TransactionRead), accTransactionAPI.FindByID)

@@ -71,3 +71,17 @@ func InitAccTransactionAPI(e *core.Engine) acc_api.TransactionAPI {
 	transactionAPI := acc_api.ProvideTransactionAPI(accTransactionServ)
 	return transactionAPI
 }
+
+func InitAccSlotAPI(e *core.Engine) acc_api.SlotAPI {
+	slotRepo := acc_repo.ProvideSlotRepo(e)
+	accSlotServ := service.ProvideAccSlotService(slotRepo)
+	slotAPI := acc_api.ProvideSlotAPI(accSlotServ)
+	return slotAPI
+}
+
+func InitAccCurrencyAPI(e *core.Engine) acc_api.CurrencyAPI {
+	currencyRepo := acc_repo.ProvideCurrencyRepo(e)
+	accCurrencyServ := service.ProvideAccCurrencyService(currencyRepo)
+	currencyAPI := acc_api.ProvideCurrencyAPI(accCurrencyServ)
+	return currencyAPI
+}
