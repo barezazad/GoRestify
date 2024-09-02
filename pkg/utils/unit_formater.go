@@ -2,67 +2,47 @@ package utils
 
 import (
 	"fmt"
-	"strconv"
 )
 
 // ByteConverter to convert Byte balance to readable balance
 func ByteConverter(length int) (out string) {
 
-	// sizes
+	// Define size constants
 	const (
-		TB = 1099511627776
-		GB = 1073741824
-		MB = 1048576
-		KB = 1024
+		TB = 1 << 40 // 1099511627776
+		GB = 1 << 30 // 1073741824
+		MB = 1 << 20 // 1048576
+		KB = 1 << 10 // 1024
 	)
 
 	var unit string
-	var i int
-	var remainder int
-	decimals := 2
+	var integerPart int
+	var decimalPart float64
 
-	// Get whole number, and the remainder for decimals
+	// Determine the unit and compute the integer and decimal parts
 	switch {
-	case length > TB:
+	case length >= TB:
 		unit = "TB"
-		i = length / TB
-		remainder = length - (i * TB)
-		break
-	case length > GB:
+		integerPart = length / TB
+		decimalPart = float64(length%TB) / float64(TB)
+	case length >= GB && length > 2684354560:
 		unit = "GB"
-		i = length / GB
-		remainder = length - (i * GB)
-		break
-	case length > MB:
+		integerPart = length / GB
+		decimalPart = float64(length%GB) / float64(GB)
+	case length >= MB:
 		unit = "MB"
-		i = length / MB
-		remainder = length - (i * MB)
-		break
-	default:
+		integerPart = length / MB
+		decimalPart = float64(length%MB) / float64(MB)
+	case length >= KB:
 		unit = "KB"
-		i = length / KB
-		remainder = length - (i * KB)
-		break
+		integerPart = length / KB
+		decimalPart = float64(length%KB) / float64(KB)
+	default:
+		unit = "B"
+		integerPart = length
+		decimalPart = 0
 	}
 
-	// This is to calculate missing leading zeroes
-	width := 0
-	if remainder > GB {
-		width = 12
-	} else if remainder > MB {
-		width = 9
-	} else {
-		width = 6
-	}
-
-	// Insert missing leading zeroes
-	remainderString := strconv.Itoa(remainder)
-	for iter := len(remainderString); iter < width; iter++ {
-		remainderString = "0" + remainderString
-	}
-	if decimals > len(remainderString) {
-		decimals = len(remainderString)
-	}
-
-	return fmt.Sprintf("%d.%s %s", i, remainderString[:decimals], unit)
+	// Format the decimal part with two decimal places
+	return fmt.Sprintf("%.2f %s", float64(integerPart)+decimalPart, unit)
 }

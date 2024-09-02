@@ -266,6 +266,24 @@ func validationCase(err error, field reflect.StructField, value interface{}, act
 					err = pkg_err.AddInvalidParam(err, fieldName,
 						pkg_err.XisNotValid, fieldName)
 				}
+
+			case string:
+
+				// Parse the string to a time.Time object
+				parsedDate, parseErr := time.Parse(time.DateOnly, v)
+				if parseErr != nil {
+					err = pkg_err.AddInvalidParam(err, fieldName,
+						pkg_err.XisNotValid, fieldName)
+					break
+				}
+
+				minAge := time.Now().AddDate(-110, 0, 0)
+				maxAge := time.Now().AddDate(-10, 0, 0)
+
+				if parsedDate.Before(minAge) || parsedDate.After(maxAge) {
+					err = pkg_err.AddInvalidParam(err, fieldName,
+						pkg_err.XisNotValid, fieldName)
+				}
 			}
 
 		case "pin":

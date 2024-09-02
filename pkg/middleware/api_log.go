@@ -23,7 +23,7 @@ type bodyLogWriter struct {
 
 func (w bodyLogWriter) write(b []byte) (int, error) {
 	w.body.Write(b)
-	return w.ResponseWriter.Write(b)
+	return w.Write(b)
 }
 
 // APILogger is used to save requests and response by using logapi

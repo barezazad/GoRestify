@@ -68,13 +68,13 @@ func checkErr(c *gin.Context, claims *pkg_types.JWTClaims, err error) {
 			response.New(c).Error(err).Abort().JSON()
 			return
 
-		case claims.RegisteredClaims.ExpiresAt == nil:
+		case claims.ExpiresAt == nil:
 			err = pkg_err.Take(err, "E1652166").Custom(pkg_err.UnauthorizedErr).
 				Message(pkg_err.TokenIsExpired).Build()
 			response.New(c).Error(err).Abort().JSON()
 			return
 
-		case time.Until(claims.RegisteredClaims.ExpiresAt.Time) < 10*time.Second:
+		case time.Until(claims.ExpiresAt.Time) < 10*time.Second:
 			err = pkg_err.Take(err, "E1690538").Custom(pkg_err.UnauthorizedErr).
 				Message(pkg_err.TokenIsExpired).Build()
 			response.New(c).Error(err).Abort().JSON()
