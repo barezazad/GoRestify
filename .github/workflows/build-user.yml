@@ -1,4 +1,4 @@
-name: Build GoRestify-user
+name: Build go-restify-user
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - "v*"
 
 env:
-  IMAGE_NAME: GoRestify-user
+  IMAGE_NAME: go-restify-user
 
 jobs:
   # Push image to GitHub Packages.
