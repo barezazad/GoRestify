@@ -35,7 +35,7 @@ func (a *RegionAPI) FindByID(c *gin.Context) {
 	var region base_model.Region
 	var id uint
 
-	if id, err = resp.GetID(c.Param("regionID"), "E1163666", base_term.Region); err != nil {
+	if id, err = resp.GetID(c.Param("regionID"), "E1136276", base_term.Region); err != nil {
 		return
 	}
 
@@ -57,7 +57,7 @@ func (a *RegionAPI) GetAll(c *gin.Context) {
 	var err error
 
 	if regions, err = a.Service.GetAll(params); err != nil {
-		err = pkg_err.Take(err, "E1180593").Message(pkg_err.SomethingWentWrong).Build()
+		err = pkg_err.Take(err, "E1198115").Message(pkg_err.SomethingWentWrong).Build()
 		resp.Error(err).JSON()
 		return
 	}
@@ -92,7 +92,7 @@ func (a *RegionAPI) Create(c *gin.Context) {
 	var region, createdRegion base_model.Region
 	var err error
 
-	if err = resp.Bind(&region, "E1150888", base_term.Region); err != nil {
+	if err = resp.Bind(&region, "E1126350", base_term.Region); err != nil {
 		return
 	}
 
@@ -102,7 +102,7 @@ func (a *RegionAPI) Create(c *gin.Context) {
 		if r := recover(); r != nil {
 			pkg_log.LogError(fmt.Errorf("panic happened in tx mode for %v",
 				"region"), "rollback recover create region")
-			err = pkg_err.New(pkg_err.SomethingWentWrong, "E1145492").
+			err = pkg_err.New(pkg_err.SomethingWentWrong, "E1157983").
 				Message(pkg_err.SomethingWentWrong).Build()
 			// rollback tx
 			params.Tx.DB.Rollback()
@@ -132,11 +132,11 @@ func (a *RegionAPI) Update(c *gin.Context) {
 	var err error
 	var region, regionBefore, regionUpdated base_model.Region
 
-	if err = resp.Bind(&region, "E1135664", base_term.Region); err != nil {
+	if err = resp.Bind(&region, "E1166586", base_term.Region); err != nil {
 		return
 	}
 
-	if region.ID, err = resp.GetID(c.Param("regionID"), "E1162016", base_term.Region); err != nil {
+	if region.ID, err = resp.GetID(c.Param("regionID"), "E1117252", base_term.Region); err != nil {
 		return
 	}
 
@@ -146,7 +146,7 @@ func (a *RegionAPI) Update(c *gin.Context) {
 		if r := recover(); r != nil {
 			pkg_log.LogError(fmt.Errorf("panic happened in tx mode for %v",
 				"region"), "rollback recover create region")
-			err = pkg_err.New(pkg_err.SomethingWentWrong, "E1138430").
+			err = pkg_err.New(pkg_err.SomethingWentWrong, "E1191752").
 				Message(pkg_err.SomethingWentWrong).Build()
 			// rollback tx
 			params.Tx.DB.Rollback()
@@ -177,7 +177,7 @@ func (a *RegionAPI) Delete(c *gin.Context) {
 	var region base_model.Region
 	var id uint
 
-	if id, err = resp.GetID(c.Param("regionID"), "E1144110", base_term.Region); err != nil {
+	if id, err = resp.GetID(c.Param("regionID"), "E1126058", base_term.Region); err != nil {
 		return
 	}
 
@@ -187,7 +187,7 @@ func (a *RegionAPI) Delete(c *gin.Context) {
 		if r := recover(); r != nil {
 			pkg_log.LogError(fmt.Errorf("panic happened in tx mode for %v",
 				"region"), "rollback recover create region")
-			err = pkg_err.New(pkg_err.SomethingWentWrong, "E1199821").
+			err = pkg_err.New(pkg_err.SomethingWentWrong, "E1138261").
 				Message(pkg_err.SomethingWentWrong).Build()
 			// rollback tx
 			params.Tx.DB.Rollback()

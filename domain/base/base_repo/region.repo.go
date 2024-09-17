@@ -45,13 +45,13 @@ func (r *RegionRepo) List(params param.Param) (regions []base_model.Region, err 
 
 	var colsStr string
 	if colsStr, err = validator.CheckColumns(r.Cols, params.Select); err != nil {
-		err = pkg_err.Take(err, "E1177123").Build()
+		err = pkg_err.Take(err, "E1156099").Build()
 		return
 	}
 
 	var whereStr string
 	if whereStr, err = params.ParseWhere(r.Cols); err != nil {
-		err = pkg_err.Take(err, "E1174655").Custom(pkg_err.ValidationFailedErr).Build()
+		err = pkg_err.Take(err, "E1142979").Custom(pkg_err.ValidationFailedErr).Build()
 		return
 	}
 
@@ -70,7 +70,7 @@ func (r *RegionRepo) List(params param.Param) (regions []base_model.Region, err 
 func (r *RegionRepo) Count(params param.Param) (count int64, err error) {
 	var whereStr string
 	if whereStr, err = params.ParseWhere(r.Cols); err != nil {
-		err = pkg_err.Take(err, "E1124248").Custom(pkg_err.ValidationFailedErr).Build()
+		err = pkg_err.Take(err, "E1148175").Custom(pkg_err.ValidationFailedErr).Build()
 		return
 	}
 

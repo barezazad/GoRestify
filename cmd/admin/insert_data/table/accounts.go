@@ -16,7 +16,7 @@ func InsertAccounts(engine *core.Engine) {
 	accounts := []base_model.Account{
 		{
 			ID:       1,
-			FullName: "admin",
+			FullName: "admin admin",
 			Username: "admin",
 			Password: "admin123Aa",
 			Email:    "barezazad100@gmail.com",

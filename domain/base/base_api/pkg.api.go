@@ -1,6 +1,7 @@
 package base_api
 
 import (
+	"GoRestify/domain/acc/acc_term"
 	"GoRestify/domain/base"
 	"GoRestify/domain/base/base_term"
 	"GoRestify/internal/core"
@@ -116,8 +117,36 @@ func (a *PkgAPI) RedisResetCacheByKey(c *gin.Context) {
 		a.Engine.RedisCacheAPI.Delete(base_term.Regions)
 
 	case base_term.City:
-		keyPattern = "" // ignore reset by pattern
+		keyPattern = fmt.Sprintf("%v-*", base_term.City)
 		a.Engine.RedisCacheAPI.Delete(base_term.Cities)
+
+	case base_term.Role:
+		keyPattern = fmt.Sprintf("%v-*", base_term.Role)
+		a.Engine.RedisCacheAPI.Delete(base_term.Roles)
+
+	case base_term.User:
+		keyPattern = fmt.Sprintf("%v-*", base_term.User)
+		a.Engine.RedisCacheAPI.Delete(base_term.Users)
+
+	case base_term.Account:
+		keyPattern = fmt.Sprintf("%v-*", base_term.Account)
+		a.Engine.RedisCacheAPI.Delete(base_term.Accounts)
+
+	case acc_term.Currency:
+		keyPattern = fmt.Sprintf("%v-*", acc_term.Currency)
+		a.Engine.RedisCacheAPI.Delete(acc_term.Currencies)
+
+	case acc_term.Slot:
+		keyPattern = fmt.Sprintf("%v-*", acc_term.Slot)
+		a.Engine.RedisCacheAPI.Delete(acc_term.Slots)
+
+	case acc_term.Transaction:
+		keyPattern = fmt.Sprintf("%v-*", acc_term.Transaction)
+		a.Engine.RedisCacheAPI.Delete(acc_term.Transactions)
+
+	case acc_term.AccountCredit:
+		keyPattern = fmt.Sprintf("%v-*", acc_term.AccountCredit)
+		a.Engine.RedisCacheAPI.Delete(acc_term.AccountCredits)
 
 	}
 
@@ -138,7 +167,8 @@ func (a *PkgAPI) RedisClearCacheToUser(c *gin.Context) {
 	userID := c.Param("userID")
 
 	// its just example
-	a.Engine.RedisCacheAPI.Delete(fmt.Sprintf("%v-%v", base_term.Region, userID))
+	a.Engine.RedisCacheAPI.Delete(fmt.Sprintf("%v-%v", base_term.User, userID))
+	a.Engine.RedisCacheAPI.Delete(fmt.Sprintf("%v-%v", base_term.Account, userID))
 
 	resp.Record(base.ClearCacheUser, userID)
 	resp.Status(http.StatusOK).

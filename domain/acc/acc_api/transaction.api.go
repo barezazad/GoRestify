@@ -35,7 +35,7 @@ func (a *TransactionAPI) FindByID(c *gin.Context) {
 	var transaction acc_model.Transaction
 	var id uint
 
-	if id, err = resp.GetID(c.Param("transactionID"), "E1163666", acc_term.Transaction); err != nil {
+	if id, err = resp.GetID(c.Param("transactionID"), "E1162700", acc_term.Transaction); err != nil {
 		return
 	}
 
@@ -57,7 +57,7 @@ func (a *TransactionAPI) GetAll(c *gin.Context) {
 	var err error
 
 	if transactions, err = a.Service.GetAll(params); err != nil {
-		err = pkg_err.Take(err, "E1180593").Message(pkg_err.SomethingWentWrong).Build()
+		err = pkg_err.Take(err, "E1160850").Message(pkg_err.SomethingWentWrong).Build()
 		resp.Error(err).JSON()
 		return
 	}
@@ -92,7 +92,7 @@ func (a *TransactionAPI) Create(c *gin.Context) {
 	var transaction, createdTransaction acc_model.Transaction
 	var err error
 
-	if err = resp.Bind(&transaction, "E1150888", acc_term.Transaction); err != nil {
+	if err = resp.Bind(&transaction, "E1115292", acc_term.Transaction); err != nil {
 		return
 	}
 
@@ -102,7 +102,7 @@ func (a *TransactionAPI) Create(c *gin.Context) {
 		if r := recover(); r != nil {
 			pkg_log.LogError(fmt.Errorf("panic happened in tx mode for %v",
 				"transaction"), "rollback recover create transaction")
-			err = pkg_err.New(pkg_err.SomethingWentWrong, "E1145492").
+			err = pkg_err.New(pkg_err.SomethingWentWrong, "E1154151").
 				Message(pkg_err.SomethingWentWrong).Build()
 			// rollback tx
 			params.Tx.DB.Rollback()
@@ -132,11 +132,11 @@ func (a *TransactionAPI) Update(c *gin.Context) {
 	var err error
 	var transaction, transactionBefore, transactionUpdated acc_model.Transaction
 
-	if err = resp.Bind(&transaction, "E1135664", acc_term.Transaction); err != nil {
+	if err = resp.Bind(&transaction, "E1198257", acc_term.Transaction); err != nil {
 		return
 	}
 
-	if transaction.ID, err = resp.GetID(c.Param("transactionID"), "E1162016", acc_term.Transaction); err != nil {
+	if transaction.ID, err = resp.GetID(c.Param("transactionID"), "E1188360", acc_term.Transaction); err != nil {
 		return
 	}
 
@@ -146,7 +146,7 @@ func (a *TransactionAPI) Update(c *gin.Context) {
 		if r := recover(); r != nil {
 			pkg_log.LogError(fmt.Errorf("panic happened in tx mode for %v",
 				"transaction"), "rollback recover create transaction")
-			err = pkg_err.New(pkg_err.SomethingWentWrong, "E1138430").
+			err = pkg_err.New(pkg_err.SomethingWentWrong, "E1197208").
 				Message(pkg_err.SomethingWentWrong).Build()
 			// rollback tx
 			params.Tx.DB.Rollback()
@@ -177,7 +177,7 @@ func (a *TransactionAPI) Delete(c *gin.Context) {
 	var transaction acc_model.Transaction
 	var id uint
 
-	if id, err = resp.GetID(c.Param("transactionID"), "E1144110", acc_term.Transaction); err != nil {
+	if id, err = resp.GetID(c.Param("transactionID"), "E1112945", acc_term.Transaction); err != nil {
 		return
 	}
 
@@ -187,7 +187,7 @@ func (a *TransactionAPI) Delete(c *gin.Context) {
 		if r := recover(); r != nil {
 			pkg_log.LogError(fmt.Errorf("panic happened in tx mode for %v",
 				"transaction"), "rollback recover create transaction")
-			err = pkg_err.New(pkg_err.SomethingWentWrong, "E1199821").
+			err = pkg_err.New(pkg_err.SomethingWentWrong, "E1115395").
 				Message(pkg_err.SomethingWentWrong).Build()
 			// rollback tx
 			params.Tx.DB.Rollback()

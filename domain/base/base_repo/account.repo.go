@@ -61,13 +61,13 @@ func (r *AccountRepo) List(params param.Param) (accounts []base_model.Account, e
 
 	var colsStr string
 	if colsStr, err = validator.CheckColumns(r.Cols, params.Select); err != nil {
-		err = pkg_err.Take(err, "E1177123").Build()
+		err = pkg_err.Take(err, "E1194599").Build()
 		return
 	}
 
 	var whereStr string
 	if whereStr, err = params.ParseWhere(r.Cols); err != nil {
-		err = pkg_err.Take(err, "E1174655").Custom(pkg_err.ValidationFailedErr).Build()
+		err = pkg_err.Take(err, "E1123304").Custom(pkg_err.ValidationFailedErr).Build()
 		return
 	}
 
@@ -86,7 +86,7 @@ func (r *AccountRepo) List(params param.Param) (accounts []base_model.Account, e
 func (r *AccountRepo) Count(params param.Param) (count int64, err error) {
 	var whereStr string
 	if whereStr, err = params.ParseWhere(r.Cols); err != nil {
-		err = pkg_err.Take(err, "E1124248").Custom(pkg_err.ValidationFailedErr).Build()
+		err = pkg_err.Take(err, "E1184792").Custom(pkg_err.ValidationFailedErr).Build()
 		return
 	}
 

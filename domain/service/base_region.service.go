@@ -38,7 +38,7 @@ func (s *BaseRegionServ) FindByID(tx tx.Tx, id uint) (region base_model.Region, 
 	}
 
 	if region, err = s.Repo.FindByID(tx, id); err != nil {
-		pkg_err.Log(err, "E1673780", "can't fetch the region", id)
+		pkg_err.Log(err, "E1189966", "can't fetch the region", id)
 		return
 	}
 
@@ -54,7 +54,7 @@ func (s *BaseRegionServ) GetAll(params param.Param) (regions []base_model.Region
 		return
 	}
 
-	params.Pagination.Limit = 100000
+	params.Limit = 100000
 	if regions, err = s.Repo.List(params); err != nil {
 		pkg_log.CheckError(err, "error in regions list")
 		return
@@ -85,12 +85,12 @@ func (s *BaseRegionServ) List(params param.Param) (regions []base_model.Region,
 func (s *BaseRegionServ) Create(tx tx.Tx, region base_model.Region) (createdRegion base_model.Region, err error) {
 
 	if err = validator.ValidateModel(region, base_term.Region, validator.Create); err != nil {
-		err = pkg_err.TickValidate(err, "E1680067", pkg_err.ValidationFailed, region)
+		err = pkg_err.TickValidate(err, "E1118046", pkg_err.ValidationFailed, region)
 		return
 	}
 
 	if createdRegion, err = s.Repo.Create(tx, region); err != nil {
-		pkg_err.Log(err, "E1626674", "error in creating region", region)
+		pkg_err.Log(err, "E1121705", "error in creating region", region)
 		return
 	}
 
@@ -103,17 +103,17 @@ func (s *BaseRegionServ) Create(tx tx.Tx, region base_model.Region) (createdRegi
 func (s *BaseRegionServ) Save(tx tx.Tx, region base_model.Region) (updatedRegion, regionBefore base_model.Region, err error) {
 
 	if err = validator.ValidateModel(region, base_term.Region, validator.Update); err != nil {
-		err = pkg_err.TickValidate(err, "E1679868", pkg_err.ValidationFailed, region)
+		err = pkg_err.TickValidate(err, "E1197976", pkg_err.ValidationFailed, region)
 		return
 	}
 
 	if regionBefore, err = s.FindByID(tx, region.ID); err != nil {
-		pkg_err.Log(err, "E1625869", "can't fetch region by id for saving it", region.ID)
+		pkg_err.Log(err, "E1111888", "can't fetch region by id for saving it", region.ID)
 		return
 	}
 
 	if updatedRegion, err = s.Repo.Save(tx, region); err != nil {
-		pkg_err.Log(err, "E1139340", "region not saved")
+		pkg_err.Log(err, "E1139209", "region not saved")
 		return
 	}
 
@@ -131,12 +131,12 @@ func (s *BaseRegionServ) Save(tx tx.Tx, region base_model.Region) (updatedRegion
 func (s *BaseRegionServ) Delete(tx tx.Tx, id uint) (region base_model.Region, err error) {
 
 	if region, err = s.FindByID(tx, id); err != nil {
-		pkg_err.Log(err, "E1653653", "region not found for deleting")
+		pkg_err.Log(err, "E1114367", "region not found for deleting")
 		return
 	}
 
 	if err = s.Repo.Delete(tx, region); err != nil {
-		pkg_err.Log(err, "E1681259", "region not deleted")
+		pkg_err.Log(err, "E1162176", "region not deleted")
 		return
 	}
 

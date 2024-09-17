@@ -33,7 +33,7 @@ func ProvideBaseAuthService(engine *core.Engine) BaseAuthServ {
 }
 
 // Login User
-func (s *BaseAuthServ) Login(tx tx.Tx, auth base_model.Auth) (user base_model.User, err error) {
+func (s *BaseAuthServ) Login(tx tx.Tx, auth base_model.Auth) (account base_model.Account, err error) {
 
 	if err = validator.ValidateModel(auth, "login", "login"); err != nil {
 		err = pkg_err.TickValidate(err, "E1062875", "validation failed username and password is required", auth)
@@ -42,9 +42,14 @@ func (s *BaseAuthServ) Login(tx tx.Tx, auth base_model.Auth) (user base_model.Us
 
 	jwtKey := s.Engine.Envs.ToByte(core.JWTSecretKey)
 
-	var account base_model.Account
 	if account, err = BaseAccountService.FindByUsername(tx, auth.Username); err != nil {
-		err = pkg_err.Log(err, "E1130152", "can't fetch the user by username")
+		err = pkg_err.Log(err, "E1162611", "can't fetch the user by username")
+		return
+	}
+
+	var user base_model.User
+	if user, err = BaseUserService.FindByID(tx, account.ID); err != nil {
+		err = pkg_err.Log(err, "E1153521", "can't fetch the user by username")
 		return
 	}
 
@@ -60,7 +65,7 @@ func (s *BaseAuthServ) Login(tx tx.Tx, auth base_model.Auth) (user base_model.Us
 		return
 	}
 
-	expirationTime := time.Now().Add(12 * time.Hour)
+	expirationTime := time.Now().Add(24 * time.Hour)
 	claims := &pkg_types.JWTClaims{
 		UserID:   user.ID,
 		Username: account.Username,
@@ -80,7 +85,7 @@ func (s *BaseAuthServ) Login(tx tx.Tx, auth base_model.Auth) (user base_model.Us
 
 	account.Resources = strings.Split(role.Resources, ",")
 	account.Password = ""
-	user.Role = role.Name
+	account.Type = ""
 
 	key := fmt.Sprintf("%v-%v", base_term.Auth, user.ID)
 	s.Engine.RedisCacheAPI.Delete(key)

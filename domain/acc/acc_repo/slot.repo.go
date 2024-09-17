@@ -45,13 +45,13 @@ func (r *SlotRepo) List(params param.Param) (slots []acc_model.Slot, err error) 
 
 	var colsStr string
 	if colsStr, err = validator.CheckColumns(r.Cols, params.Select); err != nil {
-		err = pkg_err.Take(err, "E1177123").Build()
+		err = pkg_err.Take(err, "E1134139").Build()
 		return
 	}
 
 	var whereStr string
 	if whereStr, err = params.ParseWhere(r.Cols); err != nil {
-		err = pkg_err.Take(err, "E1174655").Custom(pkg_err.ValidationFailedErr).Build()
+		err = pkg_err.Take(err, "E1132412").Custom(pkg_err.ValidationFailedErr).Build()
 		return
 	}
 
@@ -70,7 +70,7 @@ func (r *SlotRepo) List(params param.Param) (slots []acc_model.Slot, err error) 
 func (r *SlotRepo) Count(params param.Param) (count int64, err error) {
 	var whereStr string
 	if whereStr, err = params.ParseWhere(r.Cols); err != nil {
-		err = pkg_err.Take(err, "E1124248").Custom(pkg_err.ValidationFailedErr).Build()
+		err = pkg_err.Take(err, "E1171787").Custom(pkg_err.ValidationFailedErr).Build()
 		return
 	}
 

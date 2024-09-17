@@ -33,6 +33,7 @@ func ProvideTransactionRepo(engine *core.Engine) TransactionRepo {
 // FindByID finds the transaction via its id
 func (r *TransactionRepo) FindByID(tx tx.Tx, id uint) (transaction acc_model.Transaction, err error) {
 	err = tx.GetDB(r.Engine.DB, true).Table(acc_model.TransactionTable).
+		Joins("INNER JOIN acc_currencies ON base_transactions.currency_id = acc_currencies.id").
 		Where("id = ?", id).
 		First(&transaction).Error
 
@@ -45,17 +46,18 @@ func (r *TransactionRepo) List(params param.Param) (transactions []acc_model.Tra
 
 	var colsStr string
 	if colsStr, err = validator.CheckColumns(r.Cols, params.Select); err != nil {
-		err = pkg_err.Take(err, "E1177123").Build()
+		err = pkg_err.Take(err, "E1169452").Build()
 		return
 	}
 
 	var whereStr string
 	if whereStr, err = params.ParseWhere(r.Cols); err != nil {
-		err = pkg_err.Take(err, "E1174655").Custom(pkg_err.ValidationFailedErr).Build()
+		err = pkg_err.Take(err, "E1151756").Custom(pkg_err.ValidationFailedErr).Build()
 		return
 	}
 
 	err = r.Engine.DB.Table(acc_model.TransactionTable).Select(colsStr).
+		Joins("INNER JOIN acc_currencies ON base_transactions.currency_id = acc_currencies.id").
 		Where(whereStr).
 		Order(params.Order).
 		Limit(params.Limit).
@@ -70,11 +72,12 @@ func (r *TransactionRepo) List(params param.Param) (transactions []acc_model.Tra
 func (r *TransactionRepo) Count(params param.Param) (count int64, err error) {
 	var whereStr string
 	if whereStr, err = params.ParseWhere(r.Cols); err != nil {
-		err = pkg_err.Take(err, "E1124248").Custom(pkg_err.ValidationFailedErr).Build()
+		err = pkg_err.Take(err, "E1143725").Custom(pkg_err.ValidationFailedErr).Build()
 		return
 	}
 
 	err = r.Engine.DB.Table(acc_model.TransactionTable).
+		Joins("INNER JOIN acc_currencies ON base_transactions.currency_id = acc_currencies.id").
 		Where(whereStr).
 		Count(&count).Error
 

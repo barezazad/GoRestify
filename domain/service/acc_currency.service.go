@@ -38,7 +38,7 @@ func (s *AccCurrencyServ) FindByID(tx tx.Tx, id uint) (currency acc_model.Curren
 	}
 
 	if currency, err = s.Repo.FindByID(tx, id); err != nil {
-		pkg_err.Log(err, "E1673780", "can't fetch the currency", id)
+		pkg_err.Log(err, "E1127722", "can't fetch the currency", id)
 		return
 	}
 
@@ -54,7 +54,7 @@ func (s *AccCurrencyServ) GetAll(params param.Param) (currencies []acc_model.Cur
 		return
 	}
 
-	params.Pagination.Limit = 100000
+	params.Limit = 100000
 	if currencies, err = s.Repo.List(params); err != nil {
 		pkg_log.CheckError(err, "error in currencies list")
 		return
@@ -85,12 +85,12 @@ func (s *AccCurrencyServ) List(params param.Param) (currencies []acc_model.Curre
 func (s *AccCurrencyServ) Create(tx tx.Tx, currency acc_model.Currency) (createdCurrency acc_model.Currency, err error) {
 
 	if err = validator.ValidateModel(currency, acc_term.Currency, validator.Create); err != nil {
-		err = pkg_err.TickValidate(err, "E1680067", pkg_err.ValidationFailed, currency)
+		err = pkg_err.TickValidate(err, "E1156321", pkg_err.ValidationFailed, currency)
 		return
 	}
 
 	if createdCurrency, err = s.Repo.Create(tx, currency); err != nil {
-		pkg_err.Log(err, "E1626674", "error in creating currency", currency)
+		pkg_err.Log(err, "E1196495", "error in creating currency", currency)
 		return
 	}
 
@@ -103,17 +103,17 @@ func (s *AccCurrencyServ) Create(tx tx.Tx, currency acc_model.Currency) (created
 func (s *AccCurrencyServ) Save(tx tx.Tx, currency acc_model.Currency) (updatedCurrency, currencyBefore acc_model.Currency, err error) {
 
 	if err = validator.ValidateModel(currency, acc_term.Currency, validator.Update); err != nil {
-		err = pkg_err.TickValidate(err, "E1679868", pkg_err.ValidationFailed, currency)
+		err = pkg_err.TickValidate(err, "E1128005", pkg_err.ValidationFailed, currency)
 		return
 	}
 
 	if currencyBefore, err = s.FindByID(tx, currency.ID); err != nil {
-		pkg_err.Log(err, "E1625869", "can't fetch currency by id for saving it", currency.ID)
+		pkg_err.Log(err, "E1134515", "can't fetch currency by id for saving it", currency.ID)
 		return
 	}
 
 	if updatedCurrency, err = s.Repo.Save(tx, currency); err != nil {
-		pkg_err.Log(err, "E1139340", "currency not saved")
+		pkg_err.Log(err, "E1147722", "currency not saved")
 		return
 	}
 
@@ -131,12 +131,12 @@ func (s *AccCurrencyServ) Save(tx tx.Tx, currency acc_model.Currency) (updatedCu
 func (s *AccCurrencyServ) Delete(tx tx.Tx, id uint) (currency acc_model.Currency, err error) {
 
 	if currency, err = s.FindByID(tx, id); err != nil {
-		pkg_err.Log(err, "E1653653", "currency not found for deleting")
+		pkg_err.Log(err, "E1150148", "currency not found for deleting")
 		return
 	}
 
 	if err = s.Repo.Delete(tx, currency); err != nil {
-		pkg_err.Log(err, "E1681259", "currency not deleted")
+		pkg_err.Log(err, "E1198830", "currency not deleted")
 		return
 	}
 

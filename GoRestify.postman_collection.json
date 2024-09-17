@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "5449e5df-cabe-4e18-af64-a40fdc0ab0fe",
+		"_postman_id": "3cc10cd0-a790-4e48-94d1-90921ecfeab1",
 		"name": "GoRestify",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "26066740"
@@ -81,8 +81,8 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"type": "text",
-										"value": "bearer {{token}}"
+										"value": "bearer {{token}}",
+										"type": "text"
 									},
 									{
 										"key": "X-LANGUAGE",
@@ -135,13 +135,13 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"type": "text",
-										"value": "bearer {{token}}"
+										"value": "bearer {{token}}",
+										"type": "text"
 									},
 									{
 										"key": "X-LANGUAGE",
-										"type": "text",
-										"value": "en"
+										"value": "en",
+										"type": "text"
 									}
 								],
 								"body": {
@@ -181,8 +181,8 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"type": "text",
-										"value": "bearer {{token}}"
+										"value": "bearer {{token}}",
+										"type": "text"
 									},
 									{
 										"key": "X-LANGUAGE",
@@ -240,24 +240,15 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"type": "text",
-										"value": "bearer {{token}}"
+										"value": "bearer {{token}}",
+										"type": "text"
 									},
 									{
 										"key": "X-LANGUAGE",
-										"type": "text",
-										"value": "en"
+										"value": "en",
+										"type": "text"
 									}
 								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"property\": \"default_language\",\n    \"value\": \"en\",\n    \"description\": \"default language example for setting env\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
 								"url": {
 									"raw": "{{endpoint_go_restify_admin}}/clear-cache/region",
 									"host": [
@@ -278,24 +269,15 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"type": "text",
-										"value": "bearer {{token}}"
+										"value": "bearer {{token}}",
+										"type": "text"
 									},
 									{
 										"key": "X-LANGUAGE",
-										"type": "text",
-										"value": "en"
+										"value": "en",
+										"type": "text"
 									}
 								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"property\": \"default_language\",\n    \"value\": \"en\",\n    \"description\": \"default language example for setting env\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
 								"url": {
 									"raw": "{{endpoint_go_restify_admin}}/clear-cache/user/1",
 									"host": [
@@ -305,512 +287,6 @@
 										"clear-cache",
 										"user",
 										"1"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Roles",
-					"item": [
-						{
-							"name": "Find By ID",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"type": "text",
-										"value": "bearer {{token}}"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"type": "text",
-										"value": "en"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/roles/1",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"roles",
-										"1"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "All",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"type": "text",
-										"value": "bearer {{token}}"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"type": "text",
-										"value": "en"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/all/roles",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"all",
-										"roles"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Resources",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"type": "text",
-										"value": "bearer {{token}}"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"type": "text",
-										"value": "en"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/resources",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"resources"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "List",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"type": "text",
-										"value": "bearer {{token}}"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"value": "en",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/roles?order_by=id&direction=desc",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"roles"
-									],
-									"query": [
-										{
-											"key": "order_by",
-											"value": "id"
-										},
-										{
-											"key": "direction",
-											"value": "desc"
-										},
-										{
-											"key": "select",
-											"value": "id,name",
-											"disabled": true
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Craete",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Authorization",
-										"type": "text",
-										"value": "bearer {{token}}"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"type": "text",
-										"value": "en"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"name\": \"user\",\n    \"resources\": \"activity:read,setting:write,city:write,city:read,region:write,region:read,role:write,role:read,user:write,user:read\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/roles",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"roles"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Update",
-							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Authorization",
-										"type": "text",
-										"value": "bearer {{token}}"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"type": "text",
-										"value": "en"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"name\": \"user\",\n    \"resources\": \"activity:read,setting:write,city:write,city:read,region:write,region:read,role:write,role:read,user:write,user:read\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/roles/2",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"roles",
-										"2"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Delete",
-							"request": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "Authorization",
-										"type": "text",
-										"value": "bearer {{token}}"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"value": "en",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/roles/2",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"roles",
-										"2"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Users",
-					"item": [
-						{
-							"name": "Find By ID",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"type": "text",
-										"value": "bearer {{token}}"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"type": "text",
-										"value": "en"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/users/1",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"users",
-										"1"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "All",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"type": "text",
-										"value": "bearer {{token}}"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"type": "text",
-										"value": "en"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/all/users",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"all",
-										"users"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "List",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"type": "text",
-										"value": "bearer {{token}}"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"value": "en",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/users?order_by=id&direction=desc&page_size=10",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"users"
-									],
-									"query": [
-										{
-											"key": "order_by",
-											"value": "id"
-										},
-										{
-											"key": "direction",
-											"value": "desc"
-										},
-										{
-											"key": "page_size",
-											"value": "10"
-										},
-										{
-											"key": "page",
-											"value": "1",
-											"disabled": true
-										},
-										{
-											"key": "select",
-											"value": "id,name",
-											"disabled": true
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Craete",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Authorization",
-										"type": "text",
-										"value": "bearer {{token}}"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"type": "text",
-										"value": "en"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"role_id\":2,\n    \"full_name\":\"barez azad\",\n    \"username\":\"barez.azad\",\n    \"password\":\"123456Bb@\",\n    \"email\":\"barez.azad@iqonline.com\",\n    \"phone\":\"9647705549911\",\n    \"status\":\"active\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/users",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"users"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Update",
-							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Authorization",
-										"type": "text",
-										"value": "bearer {{token}}"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"type": "text",
-										"value": "en"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"role_id\":2,\n    \"full_name\":\"barez azad\",\n    \"username\":\"barez.azad\",\n    \"password\":\"123456Bb@\",\n    \"email\":\"barez.azad@iqonline.com\",\n    \"phone\":\"9647705549911\",\n    \"status\":\"active\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/users/2",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"users",
-										"2"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Delete",
-							"request": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "Authorization",
-										"type": "text",
-										"value": "bearer {{token}}"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"value": "en",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/users/2",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"users",
-										"2"
 									]
 								}
 							},
@@ -831,13 +307,13 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"type": "text",
-										"value": "bearer {{token}}"
+										"value": "bearer {{token}}",
+										"type": "text"
 									},
 									{
 										"key": "X-LANGUAGE",
-										"type": "text",
-										"value": "en"
+										"value": "en",
+										"type": "text"
 									}
 								],
 								"body": {
@@ -867,13 +343,13 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"type": "text",
-										"value": "bearer {{token}}"
+										"value": "bearer {{token}}",
+										"type": "text"
 									},
 									{
 										"key": "X-LANGUAGE",
-										"type": "text",
-										"value": "en"
+										"value": "en",
+										"type": "text"
 									}
 								],
 								"body": {
@@ -903,8 +379,8 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"type": "text",
-										"value": "bearer {{token}}"
+										"value": "bearer {{token}}",
+										"type": "text"
 									},
 									{
 										"key": "X-LANGUAGE",
@@ -962,13 +438,13 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"type": "text",
-										"value": "bearer {{token}}"
+										"value": "bearer {{token}}",
+										"type": "text"
 									},
 									{
 										"key": "X-LANGUAGE",
-										"type": "text",
-										"value": "en"
+										"value": "en",
+										"type": "text"
 									}
 								],
 								"body": {
@@ -999,13 +475,13 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"type": "text",
-										"value": "bearer {{token}}"
+										"value": "bearer {{token}}",
+										"type": "text"
 									},
 									{
 										"key": "X-LANGUAGE",
-										"type": "text",
-										"value": "en"
+										"value": "en",
+										"type": "text"
 									}
 								],
 								"body": {
@@ -1037,8 +513,8 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"type": "text",
-										"value": "bearer {{token}}"
+										"value": "bearer {{token}}",
+										"type": "text"
 									},
 									{
 										"key": "X-LANGUAGE",
@@ -1074,13 +550,13 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"type": "text",
-										"value": "bearer {{token}}"
+										"value": "bearer {{token}}",
+										"type": "text"
 									},
 									{
 										"key": "X-LANGUAGE",
-										"type": "text",
-										"value": "en"
+										"value": "en",
+										"type": "text"
 									}
 								],
 								"body": {
@@ -1110,13 +586,13 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"type": "text",
-										"value": "bearer {{token}}"
+										"value": "bearer {{token}}",
+										"type": "text"
 									},
 									{
 										"key": "X-LANGUAGE",
-										"type": "text",
-										"value": "en"
+										"value": "en",
+										"type": "text"
 									}
 								],
 								"body": {
@@ -1146,8 +622,8 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"type": "text",
-										"value": "bearer {{token}}"
+										"value": "bearer {{token}}",
+										"type": "text"
 									},
 									{
 										"key": "X-LANGUAGE",
@@ -1207,13 +683,13 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"type": "text",
-										"value": "bearer {{token}}"
+										"value": "bearer {{token}}",
+										"type": "text"
 									},
 									{
 										"key": "X-LANGUAGE",
-										"type": "text",
-										"value": "en"
+										"value": "en",
+										"type": "text"
 									}
 								],
 								"body": {
@@ -1244,13 +720,13 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"type": "text",
-										"value": "bearer {{token}}"
+										"value": "bearer {{token}}",
+										"type": "text"
 									},
 									{
 										"key": "X-LANGUAGE",
-										"type": "text",
-										"value": "en"
+										"value": "en",
+										"type": "text"
 									}
 								],
 								"body": {
@@ -1282,8 +758,8 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"type": "text",
-										"value": "bearer {{token}}"
+										"value": "bearer {{token}}",
+										"type": "text"
 									},
 									{
 										"key": "X-LANGUAGE",
@@ -1299,6 +775,888 @@
 									"path": [
 										"regions",
 										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Roles",
+					"item": [
+						{
+							"name": "Find By ID",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "bearer {{token}}",
+										"type": "text"
+									},
+									{
+										"key": "X-LANGUAGE",
+										"value": "en",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{endpoint_go_restify_admin}}/roles/1",
+									"host": [
+										"{{endpoint_go_restify_admin}}"
+									],
+									"path": [
+										"roles",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "All",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "bearer {{token}}",
+										"type": "text"
+									},
+									{
+										"key": "X-LANGUAGE",
+										"value": "en",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{endpoint_go_restify_admin}}/all/roles",
+									"host": [
+										"{{endpoint_go_restify_admin}}"
+									],
+									"path": [
+										"all",
+										"roles"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Resources",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "bearer {{token}}",
+										"type": "text"
+									},
+									{
+										"key": "X-LANGUAGE",
+										"value": "en",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{endpoint_go_restify_admin}}/resources",
+									"host": [
+										"{{endpoint_go_restify_admin}}"
+									],
+									"path": [
+										"resources"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "List",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "bearer {{token}}",
+										"type": "text"
+									},
+									{
+										"key": "X-LANGUAGE",
+										"value": "en",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{endpoint_go_restify_admin}}/roles?order_by=id&direction=desc",
+									"host": [
+										"{{endpoint_go_restify_admin}}"
+									],
+									"path": [
+										"roles"
+									],
+									"query": [
+										{
+											"key": "order_by",
+											"value": "id"
+										},
+										{
+											"key": "direction",
+											"value": "desc"
+										},
+										{
+											"key": "select",
+											"value": "id,name",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Craete",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "bearer {{token}}",
+										"type": "text"
+									},
+									{
+										"key": "X-LANGUAGE",
+										"value": "en",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"user\",\n    \"resources\": \"activity:read,setting:write,city:write,city:read,region:write,region:read,role:write,role:read,user:write,user:read\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{endpoint_go_restify_admin}}/roles",
+									"host": [
+										"{{endpoint_go_restify_admin}}"
+									],
+									"path": [
+										"roles"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "bearer {{token}}",
+										"type": "text"
+									},
+									{
+										"key": "X-LANGUAGE",
+										"value": "en",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"user\",\n    \"resources\": \"activity:read,setting:write,city:write,city:read,region:write,region:read,role:write,role:read,user:write,user:read\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{endpoint_go_restify_admin}}/roles/2",
+									"host": [
+										"{{endpoint_go_restify_admin}}"
+									],
+									"path": [
+										"roles",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "bearer {{token}}",
+										"type": "text"
+									},
+									{
+										"key": "X-LANGUAGE",
+										"value": "en",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{endpoint_go_restify_admin}}/roles/2",
+									"host": [
+										"{{endpoint_go_restify_admin}}"
+									],
+									"path": [
+										"roles",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Accounts",
+					"item": [
+						{
+							"name": "Find By ID",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "bearer {{token}}",
+										"type": "text"
+									},
+									{
+										"key": "X-LANGUAGE",
+										"value": "en",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{endpoint_go_restify_admin}}/accounts/1",
+									"host": [
+										"{{endpoint_go_restify_admin}}"
+									],
+									"path": [
+										"accounts",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "All",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "bearer {{token}}",
+										"type": "text"
+									},
+									{
+										"key": "X-LANGUAGE",
+										"value": "en",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{endpoint_go_restify_admin}}/all/accounts",
+									"host": [
+										"{{endpoint_go_restify_admin}}"
+									],
+									"path": [
+										"all",
+										"accounts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "List",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "bearer {{token}}",
+										"type": "text"
+									},
+									{
+										"key": "X-LANGUAGE",
+										"value": "en",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{endpoint_go_restify_admin}}/accounts?order_by=id&direction=desc&page_size=10",
+									"host": [
+										"{{endpoint_go_restify_admin}}"
+									],
+									"path": [
+										"accounts"
+									],
+									"query": [
+										{
+											"key": "order_by",
+											"value": "id"
+										},
+										{
+											"key": "direction",
+											"value": "desc"
+										},
+										{
+											"key": "page_size",
+											"value": "10"
+										},
+										{
+											"key": "page",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "select",
+											"value": "id,name",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Craete",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "bearer {{token}}",
+										"type": "text"
+									},
+									{
+										"key": "X-LANGUAGE",
+										"value": "en",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "// customer\n{\n    \"full_name\": \"barez azad\",\n    \"username\": \"barez.azad\",\n    \"password\": \"123456Bb@a\",\n    \"email\": \"barez.azad@gmail.com\",\n    \"phone\": \"9647705549911\",\n    \"type\": \"customer\",\n    \"status\": \"active\"\n}\n\n// user\n// {\n//     \"full_name\": \"barez azad\",\n//     \"username\": \"barez.azad\",\n//     \"password\": \"123456Bb@a\",\n//     \"email\": \"barez.azad@gmail.com\",\n//     \"phone\": \"9647705549911\",\n//     \"type\": \"user\",\n//     \"status\": \"active\",\n//     \"role_id\": 2\n// }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{endpoint_go_restify_admin}}/accounts",
+									"host": [
+										"{{endpoint_go_restify_admin}}"
+									],
+									"path": [
+										"accounts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "bearer {{token}}",
+										"type": "text"
+									},
+									{
+										"key": "X-LANGUAGE",
+										"value": "en",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "// customer\n{\n    \"full_name\": \"barez azad\",\n    \"username\": \"barez.azad\",\n    \"password\": \"123456Bb@a\",\n    \"email\": \"barez.azad@gmail.com\",\n    \"phone\": \"9647705549911\",\n    \"type\": \"customer\",\n    \"status\": \"active\"\n}\n\n// user\n// {\n//     \"full_name\": \"barez azad\",\n//     \"username\": \"barez.azad\",\n//     \"password\": \"123456Bb@a\",\n//     \"email\": \"barez.azad@gmail.com\",\n//     \"phone\": \"9647705549911\",\n//     \"type\": \"user\",\n//     \"status\": \"active\",\n//     \"role_id\": 2\n// }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{endpoint_go_restify_admin}}/accounts/2",
+									"host": [
+										"{{endpoint_go_restify_admin}}"
+									],
+									"path": [
+										"accounts",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "bearer {{token}}",
+										"type": "text"
+									},
+									{
+										"key": "X-LANGUAGE",
+										"value": "en",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{endpoint_go_restify_admin}}/accounts/2",
+									"host": [
+										"{{endpoint_go_restify_admin}}"
+									],
+									"path": [
+										"accounts",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Currencies",
+					"item": [
+						{
+							"name": "Find By ID",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "bearer {{token}}",
+										"type": "text"
+									},
+									{
+										"key": "X-LANGUAGE",
+										"value": "en",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{endpoint_go_restify_admin}}/currencies/1",
+									"host": [
+										"{{endpoint_go_restify_admin}}"
+									],
+									"path": [
+										"currencies",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "All",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "bearer {{token}}",
+										"type": "text"
+									},
+									{
+										"key": "X-LANGUAGE",
+										"value": "en",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{endpoint_go_restify_admin}}/all/currencies",
+									"host": [
+										"{{endpoint_go_restify_admin}}"
+									],
+									"path": [
+										"all",
+										"currencies"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "List",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "bearer {{token}}",
+										"type": "text"
+									},
+									{
+										"key": "X-LANGUAGE",
+										"value": "en",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{endpoint_go_restify_admin}}/currencies?order_by=id&direction=desc&page_size=10",
+									"host": [
+										"{{endpoint_go_restify_admin}}"
+									],
+									"path": [
+										"currencies"
+									],
+									"query": [
+										{
+											"key": "order_by",
+											"value": "id"
+										},
+										{
+											"key": "direction",
+											"value": "desc"
+										},
+										{
+											"key": "page_size",
+											"value": "10"
+										},
+										{
+											"key": "page",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "select",
+											"value": "id,name",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Craete",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "bearer {{token}}",
+										"type": "text"
+									},
+									{
+										"key": "X-LANGUAGE",
+										"value": "en",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"USD\",\n    \"symbol\": \"$\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{endpoint_go_restify_admin}}/currencies",
+									"host": [
+										"{{endpoint_go_restify_admin}}"
+									],
+									"path": [
+										"currencies"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "bearer {{token}}",
+										"type": "text"
+									},
+									{
+										"key": "X-LANGUAGE",
+										"value": "en",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"USD\",\n    \"symbol\": \"$\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{endpoint_go_restify_admin}}/currencies/2",
+									"host": [
+										"{{endpoint_go_restify_admin}}"
+									],
+									"path": [
+										"currencies",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "bearer {{token}}",
+										"type": "text"
+									},
+									{
+										"key": "X-LANGUAGE",
+										"value": "en",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{endpoint_go_restify_admin}}/currencies/2",
+									"host": [
+										"{{endpoint_go_restify_admin}}"
+									],
+									"path": [
+										"currencies",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Transactions",
+					"item": [
+						{
+							"name": "Find By ID",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "bearer {{token}}",
+										"type": "text"
+									},
+									{
+										"key": "X-LANGUAGE",
+										"value": "en",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{endpoint_go_restify_admin}}/transactions/1",
+									"host": [
+										"{{endpoint_go_restify_admin}}"
+									],
+									"path": [
+										"transactions",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "All",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "bearer {{token}}",
+										"type": "text"
+									},
+									{
+										"key": "X-LANGUAGE",
+										"value": "en",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{endpoint_go_restify_admin}}/all/transactions",
+									"host": [
+										"{{endpoint_go_restify_admin}}"
+									],
+									"path": [
+										"all",
+										"transactions"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "List",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "bearer {{token}}",
+										"type": "text"
+									},
+									{
+										"key": "X-LANGUAGE",
+										"value": "en",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{endpoint_go_restify_admin}}/transactions?order_by=id&direction=desc&page_size=10",
+									"host": [
+										"{{endpoint_go_restify_admin}}"
+									],
+									"path": [
+										"transactions"
+									],
+									"query": [
+										{
+											"key": "order_by",
+											"value": "id"
+										},
+										{
+											"key": "direction",
+											"value": "desc"
+										},
+										{
+											"key": "page_size",
+											"value": "10"
+										},
+										{
+											"key": "page",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "select",
+											"value": "id,name",
+											"disabled": true
+										}
 									]
 								}
 							},
@@ -1321,8 +1679,8 @@
 						"header": [
 							{
 								"key": "X-LANGUAGE",
-								"type": "text",
-								"value": "en"
+								"value": "en",
+								"type": "text"
 							}
 						],
 						"body": {

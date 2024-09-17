@@ -35,7 +35,7 @@ func (a *AccountAPI) FindByID(c *gin.Context) {
 	var account base_model.Account
 	var id uint
 
-	if id, err = resp.GetID(c.Param("accountID"), "E1163666", base_term.Account); err != nil {
+	if id, err = resp.GetID(c.Param("accountID"), "E1130152", base_term.Account); err != nil {
 		return
 	}
 
@@ -59,7 +59,7 @@ func (a *AccountAPI) GetAll(c *gin.Context) {
 	var err error
 
 	if accounts, err = a.Service.GetAll(params); err != nil {
-		err = pkg_err.Take(err, "E1180593").Message(pkg_err.SomethingWentWrong).Build()
+		err = pkg_err.Take(err, "E1112975").Message(pkg_err.SomethingWentWrong).Build()
 		resp.Error(err).JSON()
 		return
 	}
@@ -94,7 +94,7 @@ func (a *AccountAPI) Create(c *gin.Context) {
 	var account, createdAccount base_model.Account
 	var err error
 
-	if err = resp.Bind(&account, "E1150888", base_term.Account); err != nil {
+	if err = resp.Bind(&account, "E1139696", base_term.Account); err != nil {
 		return
 	}
 
@@ -104,7 +104,7 @@ func (a *AccountAPI) Create(c *gin.Context) {
 		if r := recover(); r != nil {
 			pkg_log.LogError(fmt.Errorf("panic happened in tx mode for %v",
 				"account"), "rollback recover create account")
-			err = pkg_err.New(pkg_err.SomethingWentWrong, "E1145492").
+			err = pkg_err.New(pkg_err.SomethingWentWrong, "E1128312").
 				Message(pkg_err.SomethingWentWrong).Build()
 			// rollback tx
 			params.Tx.DB.Rollback()
@@ -134,11 +134,11 @@ func (a *AccountAPI) Update(c *gin.Context) {
 	var err error
 	var account, accountBefore, accountUpdated base_model.Account
 
-	if err = resp.Bind(&account, "E1135664", base_term.Account); err != nil {
+	if err = resp.Bind(&account, "E1126876", base_term.Account); err != nil {
 		return
 	}
 
-	if account.ID, err = resp.GetID(c.Param("accountID"), "E1162016", base_term.Account); err != nil {
+	if account.ID, err = resp.GetID(c.Param("accountID"), "E1182300", base_term.Account); err != nil {
 		return
 	}
 
@@ -148,7 +148,7 @@ func (a *AccountAPI) Update(c *gin.Context) {
 		if r := recover(); r != nil {
 			pkg_log.LogError(fmt.Errorf("panic happened in tx mode for %v",
 				"account"), "rollback recover create account")
-			err = pkg_err.New(pkg_err.SomethingWentWrong, "E1138430").
+			err = pkg_err.New(pkg_err.SomethingWentWrong, "E1163983").
 				Message(pkg_err.SomethingWentWrong).Build()
 			// rollback tx
 			params.Tx.DB.Rollback()
@@ -179,7 +179,7 @@ func (a *AccountAPI) Delete(c *gin.Context) {
 	var account base_model.Account
 	var id uint
 
-	if id, err = resp.GetID(c.Param("accountID"), "E1144110", base_term.Account); err != nil {
+	if id, err = resp.GetID(c.Param("accountID"), "E1148834", base_term.Account); err != nil {
 		return
 	}
 
@@ -189,7 +189,7 @@ func (a *AccountAPI) Delete(c *gin.Context) {
 		if r := recover(); r != nil {
 			pkg_log.LogError(fmt.Errorf("panic happened in tx mode for %v",
 				"account"), "rollback recover create account")
-			err = pkg_err.New(pkg_err.SomethingWentWrong, "E1199821").
+			err = pkg_err.New(pkg_err.SomethingWentWrong, "E1119314").
 				Message(pkg_err.SomethingWentWrong).Build()
 			// rollback tx
 			params.Tx.DB.Rollback()

@@ -40,7 +40,7 @@ func (s *BaseAccountServ) FindByID(tx tx.Tx, id uint) (account base_model.Accoun
 	}
 
 	if account, err = s.Repo.FindByID(tx, id); err != nil {
-		pkg_err.Log(err, "E1673780", "can't fetch the account", id)
+		pkg_err.Log(err, "E1133637", "can't fetch the account", id)
 		return
 	}
 
@@ -67,7 +67,7 @@ func (s *BaseAccountServ) GetAll(params param.Param) (accounts []base_model.Acco
 		return
 	}
 
-	params.Pagination.Limit = 100000
+	params.Limit = 100000
 	if accounts, err = s.Repo.List(params); err != nil {
 		pkg_log.CheckError(err, "error in accounts list")
 		return
@@ -106,7 +106,7 @@ func (s *BaseAccountServ) List(params param.Param) (accounts []base_model.Accoun
 func (s *BaseAccountServ) Create(tx tx.Tx, account base_model.Account) (createdAccount base_model.Account, err error) {
 
 	if err = validator.ValidateModel(account, base_term.Account, validator.Create); err != nil {
-		err = pkg_err.TickValidate(err, "E1680067", pkg_err.ValidationFailed, account)
+		err = pkg_err.TickValidate(err, "E1192923", pkg_err.ValidationFailed, account)
 		return
 	}
 
@@ -116,7 +116,7 @@ func (s *BaseAccountServ) Create(tx tx.Tx, account base_model.Account) (createdA
 	}
 
 	if createdAccount, err = s.Repo.Create(tx, account); err != nil {
-		pkg_err.Log(err, "E1626674", "error in creating account", account)
+		pkg_err.Log(err, "E1129381", "error in creating account", account)
 		return
 	}
 	createdAccount.Password = ""
@@ -128,7 +128,7 @@ func (s *BaseAccountServ) Create(tx tx.Tx, account base_model.Account) (createdA
 			RoleID: account.RoleID,
 		}
 		if _, err = BaseUserService.Create(tx, account.User); err != nil {
-			pkg_err.Log(err, "E1626674", "error in creating user", account)
+			pkg_err.Log(err, "E1140039", "error in creating user", account)
 			return
 		}
 	}
@@ -142,12 +142,12 @@ func (s *BaseAccountServ) Create(tx tx.Tx, account base_model.Account) (createdA
 func (s *BaseAccountServ) Save(tx tx.Tx, account base_model.Account) (updatedAccount, accountBefore base_model.Account, err error) {
 
 	if err = validator.ValidateModel(account, base_term.Account, validator.Update); err != nil {
-		err = pkg_err.TickValidate(err, "E1679868", pkg_err.ValidationFailed, account)
+		err = pkg_err.TickValidate(err, "E1158219", pkg_err.ValidationFailed, account)
 		return
 	}
 
 	if accountBefore, err = s.FindByID(tx, account.ID); err != nil {
-		pkg_err.Log(err, "E1625869", "can't fetch account by id for saving it", account.ID)
+		pkg_err.Log(err, "E1124905", "can't fetch account by id for saving it", account.ID)
 		return
 	}
 
@@ -161,7 +161,7 @@ func (s *BaseAccountServ) Save(tx tx.Tx, account base_model.Account) (updatedAcc
 	}
 
 	if updatedAccount, err = s.Repo.Save(tx, account); err != nil {
-		pkg_err.Log(err, "E1139340", "account not saved")
+		pkg_err.Log(err, "E1116402", "account not saved")
 		return
 	}
 	updatedAccount.Password = ""
@@ -173,7 +173,7 @@ func (s *BaseAccountServ) Save(tx tx.Tx, account base_model.Account) (updatedAcc
 			RoleID: account.RoleID,
 		}
 		if _, _, err = BaseUserService.Save(tx, account.User); err != nil {
-			pkg_err.Log(err, "E1626674", "error in creating user", account)
+			pkg_err.Log(err, "E1125792", "error in creating user", account)
 			return
 		}
 	}
@@ -192,12 +192,12 @@ func (s *BaseAccountServ) Save(tx tx.Tx, account base_model.Account) (updatedAcc
 func (s *BaseAccountServ) Delete(tx tx.Tx, id uint) (account base_model.Account, err error) {
 
 	if account, err = s.FindByID(tx, id); err != nil {
-		pkg_err.Log(err, "E1653653", "account not found for deleting")
+		pkg_err.Log(err, "E1160391", "account not found for deleting")
 		return
 	}
 
 	if err = s.Repo.Delete(tx, account); err != nil {
-		pkg_err.Log(err, "E1681259", "account not deleted")
+		pkg_err.Log(err, "E1172081", "account not deleted")
 		return
 	}
 

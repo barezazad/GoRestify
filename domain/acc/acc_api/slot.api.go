@@ -35,7 +35,7 @@ func (a *SlotAPI) FindByID(c *gin.Context) {
 	var slot acc_model.Slot
 	var id uint
 
-	if id, err = resp.GetID(c.Param("slotID"), "E1163666", acc_term.Slot); err != nil {
+	if id, err = resp.GetID(c.Param("slotID"), "E1135221", acc_term.Slot); err != nil {
 		return
 	}
 
@@ -57,7 +57,7 @@ func (a *SlotAPI) GetAll(c *gin.Context) {
 	var err error
 
 	if slots, err = a.Service.GetAll(params); err != nil {
-		err = pkg_err.Take(err, "E1180593").Message(pkg_err.SomethingWentWrong).Build()
+		err = pkg_err.Take(err, "E1127268").Message(pkg_err.SomethingWentWrong).Build()
 		resp.Error(err).JSON()
 		return
 	}
@@ -92,7 +92,7 @@ func (a *SlotAPI) Create(c *gin.Context) {
 	var slot, createdSlot acc_model.Slot
 	var err error
 
-	if err = resp.Bind(&slot, "E1150888", acc_term.Slot); err != nil {
+	if err = resp.Bind(&slot, "E1111986", acc_term.Slot); err != nil {
 		return
 	}
 
@@ -102,7 +102,7 @@ func (a *SlotAPI) Create(c *gin.Context) {
 		if r := recover(); r != nil {
 			pkg_log.LogError(fmt.Errorf("panic happened in tx mode for %v",
 				"slot"), "rollback recover create slot")
-			err = pkg_err.New(pkg_err.SomethingWentWrong, "E1145492").
+			err = pkg_err.New(pkg_err.SomethingWentWrong, "E1199756").
 				Message(pkg_err.SomethingWentWrong).Build()
 			// rollback tx
 			params.Tx.DB.Rollback()
@@ -132,11 +132,11 @@ func (a *SlotAPI) Update(c *gin.Context) {
 	var err error
 	var slot, slotBefore, slotUpdated acc_model.Slot
 
-	if err = resp.Bind(&slot, "E1135664", acc_term.Slot); err != nil {
+	if err = resp.Bind(&slot, "E1115577", acc_term.Slot); err != nil {
 		return
 	}
 
-	if slot.ID, err = resp.GetID(c.Param("slotID"), "E1162016", acc_term.Slot); err != nil {
+	if slot.ID, err = resp.GetID(c.Param("slotID"), "E1124539", acc_term.Slot); err != nil {
 		return
 	}
 
@@ -146,7 +146,7 @@ func (a *SlotAPI) Update(c *gin.Context) {
 		if r := recover(); r != nil {
 			pkg_log.LogError(fmt.Errorf("panic happened in tx mode for %v",
 				"slot"), "rollback recover create slot")
-			err = pkg_err.New(pkg_err.SomethingWentWrong, "E1138430").
+			err = pkg_err.New(pkg_err.SomethingWentWrong, "E1129224").
 				Message(pkg_err.SomethingWentWrong).Build()
 			// rollback tx
 			params.Tx.DB.Rollback()
@@ -177,7 +177,7 @@ func (a *SlotAPI) Delete(c *gin.Context) {
 	var slot acc_model.Slot
 	var id uint
 
-	if id, err = resp.GetID(c.Param("slotID"), "E1144110", acc_term.Slot); err != nil {
+	if id, err = resp.GetID(c.Param("slotID"), "E1171272", acc_term.Slot); err != nil {
 		return
 	}
 
@@ -187,7 +187,7 @@ func (a *SlotAPI) Delete(c *gin.Context) {
 		if r := recover(); r != nil {
 			pkg_log.LogError(fmt.Errorf("panic happened in tx mode for %v",
 				"slot"), "rollback recover create slot")
-			err = pkg_err.New(pkg_err.SomethingWentWrong, "E1199821").
+			err = pkg_err.New(pkg_err.SomethingWentWrong, "E1127820").
 				Message(pkg_err.SomethingWentWrong).Build()
 			// rollback tx
 			params.Tx.DB.Rollback()

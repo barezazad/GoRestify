@@ -45,13 +45,13 @@ func (r *CurrencyRepo) List(params param.Param) (currencies []acc_model.Currency
 
 	var colsStr string
 	if colsStr, err = validator.CheckColumns(r.Cols, params.Select); err != nil {
-		err = pkg_err.Take(err, "E1177123").Build()
+		err = pkg_err.Take(err, "E1171238").Build()
 		return
 	}
 
 	var whereStr string
 	if whereStr, err = params.ParseWhere(r.Cols); err != nil {
-		err = pkg_err.Take(err, "E1174655").Custom(pkg_err.ValidationFailedErr).Build()
+		err = pkg_err.Take(err, "E1148650").Custom(pkg_err.ValidationFailedErr).Build()
 		return
 	}
 
@@ -70,7 +70,7 @@ func (r *CurrencyRepo) List(params param.Param) (currencies []acc_model.Currency
 func (r *CurrencyRepo) Count(params param.Param) (count int64, err error) {
 	var whereStr string
 	if whereStr, err = params.ParseWhere(r.Cols); err != nil {
-		err = pkg_err.Take(err, "E1124248").Custom(pkg_err.ValidationFailedErr).Build()
+		err = pkg_err.Take(err, "E1153286").Custom(pkg_err.ValidationFailedErr).Build()
 		return
 	}
 

@@ -55,7 +55,7 @@ func (s *BaseRoleServ) GetAll(params param.Param) (roles []base_model.Role, err 
 		return
 	}
 
-	params.Pagination.Limit = 1000000
+	params.Limit = 1000000
 	if roles, err = s.Repo.List(params); err != nil {
 		pkg_log.CheckError(err, "error in roles list")
 		return

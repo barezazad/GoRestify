@@ -54,7 +54,7 @@ func (s *BaseUserServ) GetAll(params param.Param) (users []base_model.User, err 
 		return
 	}
 
-	params.Pagination.Limit = 1000000
+	params.Limit = 1000000
 	if users, err = s.Repo.List(params); err != nil {
 		pkg_log.CheckError(err, "error in users list")
 		return

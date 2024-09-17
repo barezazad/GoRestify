@@ -65,7 +65,7 @@ func (s *AccAccountCreditServ) GetAll(params param.Param) (accountCredits []acc_
 		return
 	}
 
-	params.Pagination.Limit = 100000
+	params.Limit = 100000
 	if accountCredits, err = s.Repo.List(params); err != nil {
 		pkg_log.CheckError(err, "error in accountCredits list")
 		return

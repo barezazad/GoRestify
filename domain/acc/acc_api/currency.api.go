@@ -35,7 +35,7 @@ func (a *CurrencyAPI) FindByID(c *gin.Context) {
 	var currency acc_model.Currency
 	var id uint
 
-	if id, err = resp.GetID(c.Param("currencyID"), "E1163666", acc_term.Currency); err != nil {
+	if id, err = resp.GetID(c.Param("currencyID"), "E1173530", acc_term.Currency); err != nil {
 		return
 	}
 
@@ -57,7 +57,7 @@ func (a *CurrencyAPI) GetAll(c *gin.Context) {
 	var err error
 
 	if currencies, err = a.Service.GetAll(params); err != nil {
-		err = pkg_err.Take(err, "E1180593").Message(pkg_err.SomethingWentWrong).Build()
+		err = pkg_err.Take(err, "E1151472").Message(pkg_err.SomethingWentWrong).Build()
 		resp.Error(err).JSON()
 		return
 	}
@@ -92,7 +92,7 @@ func (a *CurrencyAPI) Create(c *gin.Context) {
 	var currency, createdCurrency acc_model.Currency
 	var err error
 
-	if err = resp.Bind(&currency, "E1150888", acc_term.Currency); err != nil {
+	if err = resp.Bind(&currency, "E1196146", acc_term.Currency); err != nil {
 		return
 	}
 
@@ -102,7 +102,7 @@ func (a *CurrencyAPI) Create(c *gin.Context) {
 		if r := recover(); r != nil {
 			pkg_log.LogError(fmt.Errorf("panic happened in tx mode for %v",
 				"currency"), "rollback recover create currency")
-			err = pkg_err.New(pkg_err.SomethingWentWrong, "E1145492").
+			err = pkg_err.New(pkg_err.SomethingWentWrong, "E1174851").
 				Message(pkg_err.SomethingWentWrong).Build()
 			// rollback tx
 			params.Tx.DB.Rollback()
@@ -132,11 +132,11 @@ func (a *CurrencyAPI) Update(c *gin.Context) {
 	var err error
 	var currency, currencyBefore, currencyUpdated acc_model.Currency
 
-	if err = resp.Bind(&currency, "E1135664", acc_term.Currency); err != nil {
+	if err = resp.Bind(&currency, "E1121644", acc_term.Currency); err != nil {
 		return
 	}
 
-	if currency.ID, err = resp.GetID(c.Param("currencyID"), "E1162016", acc_term.Currency); err != nil {
+	if currency.ID, err = resp.GetID(c.Param("currencyID"), "E1159908", acc_term.Currency); err != nil {
 		return
 	}
 
@@ -146,7 +146,7 @@ func (a *CurrencyAPI) Update(c *gin.Context) {
 		if r := recover(); r != nil {
 			pkg_log.LogError(fmt.Errorf("panic happened in tx mode for %v",
 				"currency"), "rollback recover create currency")
-			err = pkg_err.New(pkg_err.SomethingWentWrong, "E1138430").
+			err = pkg_err.New(pkg_err.SomethingWentWrong, "E1112114").
 				Message(pkg_err.SomethingWentWrong).Build()
 			// rollback tx
 			params.Tx.DB.Rollback()
@@ -177,7 +177,7 @@ func (a *CurrencyAPI) Delete(c *gin.Context) {
 	var currency acc_model.Currency
 	var id uint
 
-	if id, err = resp.GetID(c.Param("currencyID"), "E1144110", acc_term.Currency); err != nil {
+	if id, err = resp.GetID(c.Param("currencyID"), "E1136191", acc_term.Currency); err != nil {
 		return
 	}
 
@@ -187,7 +187,7 @@ func (a *CurrencyAPI) Delete(c *gin.Context) {
 		if r := recover(); r != nil {
 			pkg_log.LogError(fmt.Errorf("panic happened in tx mode for %v",
 				"currency"), "rollback recover create currency")
-			err = pkg_err.New(pkg_err.SomethingWentWrong, "E1199821").
+			err = pkg_err.New(pkg_err.SomethingWentWrong, "E1125252").
 				Message(pkg_err.SomethingWentWrong).Build()
 			// rollback tx
 			params.Tx.DB.Rollback()

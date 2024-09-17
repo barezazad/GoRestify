@@ -38,7 +38,7 @@ func (s *AccSlotServ) FindByID(tx tx.Tx, id uint) (slot acc_model.Slot, err erro
 	}
 
 	if slot, err = s.Repo.FindByID(tx, id); err != nil {
-		pkg_err.Log(err, "E1673780", "can't fetch the slot", id)
+		pkg_err.Log(err, "E1112195", "can't fetch the slot", id)
 		return
 	}
 
@@ -54,7 +54,7 @@ func (s *AccSlotServ) GetAll(params param.Param) (slots []acc_model.Slot, err er
 		return
 	}
 
-	params.Pagination.Limit = 100000
+	params.Limit = 100000
 	if slots, err = s.Repo.List(params); err != nil {
 		pkg_log.CheckError(err, "error in slots list")
 		return
@@ -85,12 +85,12 @@ func (s *AccSlotServ) List(params param.Param) (slots []acc_model.Slot,
 func (s *AccSlotServ) Create(tx tx.Tx, slot acc_model.Slot) (createdSlot acc_model.Slot, err error) {
 
 	if err = validator.ValidateModel(slot, acc_term.Slot, validator.Create); err != nil {
-		err = pkg_err.TickValidate(err, "E1680067", pkg_err.ValidationFailed, slot)
+		err = pkg_err.TickValidate(err, "E1134338", pkg_err.ValidationFailed, slot)
 		return
 	}
 
 	if createdSlot, err = s.Repo.Create(tx, slot); err != nil {
-		pkg_err.Log(err, "E1626674", "error in creating slot", slot)
+		pkg_err.Log(err, "E1128262", "error in creating slot", slot)
 		return
 	}
 
@@ -103,17 +103,17 @@ func (s *AccSlotServ) Create(tx tx.Tx, slot acc_model.Slot) (createdSlot acc_mod
 func (s *AccSlotServ) Save(tx tx.Tx, slot acc_model.Slot) (updatedSlot, slotBefore acc_model.Slot, err error) {
 
 	if err = validator.ValidateModel(slot, acc_term.Slot, validator.Update); err != nil {
-		err = pkg_err.TickValidate(err, "E1679868", pkg_err.ValidationFailed, slot)
+		err = pkg_err.TickValidate(err, "E1130667", pkg_err.ValidationFailed, slot)
 		return
 	}
 
 	if slotBefore, err = s.FindByID(tx, slot.ID); err != nil {
-		pkg_err.Log(err, "E1625869", "can't fetch slot by id for saving it", slot.ID)
+		pkg_err.Log(err, "E1126558", "can't fetch slot by id for saving it", slot.ID)
 		return
 	}
 
 	if updatedSlot, err = s.Repo.Save(tx, slot); err != nil {
-		pkg_err.Log(err, "E1139340", "slot not saved")
+		pkg_err.Log(err, "E1132099", "slot not saved")
 		return
 	}
 
@@ -131,12 +131,12 @@ func (s *AccSlotServ) Save(tx tx.Tx, slot acc_model.Slot) (updatedSlot, slotBefo
 func (s *AccSlotServ) Delete(tx tx.Tx, id uint) (slot acc_model.Slot, err error) {
 
 	if slot, err = s.FindByID(tx, id); err != nil {
-		pkg_err.Log(err, "E1653653", "slot not found for deleting")
+		pkg_err.Log(err, "E1153236", "slot not found for deleting")
 		return
 	}
 
 	if err = s.Repo.Delete(tx, slot); err != nil {
-		pkg_err.Log(err, "E1681259", "slot not deleted")
+		pkg_err.Log(err, "E1192268", "slot not deleted")
 		return
 	}
 

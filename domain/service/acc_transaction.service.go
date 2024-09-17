@@ -40,7 +40,7 @@ func (s *AccTransactionServ) FindByID(tx tx.Tx, id uint) (transaction acc_model.
 	}
 
 	if transaction, err = s.Repo.FindByID(tx, id); err != nil {
-		pkg_err.Log(err, "E1673780", "can't fetch the transaction", id)
+		pkg_err.Log(err, "E1155388", "can't fetch the transaction", id)
 		return
 	}
 
@@ -56,7 +56,7 @@ func (s *AccTransactionServ) GetAll(params param.Param) (transactions []acc_mode
 		return
 	}
 
-	params.Pagination.Limit = 100000
+	params.Limit = 100000
 	if transactions, err = s.Repo.List(params); err != nil {
 		pkg_log.CheckError(err, "error in transactions list")
 		return
@@ -87,7 +87,7 @@ func (s *AccTransactionServ) List(params param.Param) (transactions []acc_model.
 func (s *AccTransactionServ) DoTransaction(tx tx.Tx, transaction acc_model.Transaction) (createdTransaction acc_model.Transaction, err error) {
 
 	if err = validator.ValidateModel(transaction, acc_term.Transaction, validator.Create); err != nil {
-		err = pkg_err.TickValidate(err, "E1680067", pkg_err.ValidationFailed, transaction)
+		err = pkg_err.TickValidate(err, "E1163777", pkg_err.ValidationFailed, transaction)
 		return
 	}
 
@@ -98,7 +98,7 @@ func (s *AccTransactionServ) DoTransaction(tx tx.Tx, transaction acc_model.Trans
 	transaction.Hash = uuid.New().String()
 
 	if createdTransaction, err = s.Repo.Create(tx, transaction); err != nil {
-		pkg_err.Log(err, "E1626674", "error in creating transaction", transaction)
+		pkg_err.Log(err, "E1126470", "error in creating transaction", transaction)
 		return
 	}
 
@@ -116,7 +116,7 @@ func (s *AccTransactionServ) DoTransaction(tx tx.Tx, transaction acc_model.Trans
 		// check if does have enough balance
 		if !v.Credit.Num().IsZero() {
 			// check balance with the amount
-			if accountCredit.Balance.Num().Abs().LessThan(v.Credit.Num()) {
+			if accountCredit.Balance.Num().LessThan(v.Credit.Num()) {
 				err = pkg_err.New(acc_term.YouHaveNotEnoughCredit, "E1099045", "you have not enough balance", accountCredit.AccountID).
 					Message(acc_term.YouHaveNotEnoughCredit).Custom(pkg_err.BadRequestErr).Build()
 				return
@@ -165,12 +165,12 @@ func (s *AccTransactionServ) DoTransaction(tx tx.Tx, transaction acc_model.Trans
 func (s *AccTransactionServ) Create(tx tx.Tx, transaction acc_model.Transaction) (createdTransaction acc_model.Transaction, err error) {
 
 	if err = validator.ValidateModel(transaction, acc_term.Transaction, validator.Create); err != nil {
-		err = pkg_err.TickValidate(err, "E1680067", pkg_err.ValidationFailed, transaction)
+		err = pkg_err.TickValidate(err, "E1152912", pkg_err.ValidationFailed, transaction)
 		return
 	}
 
 	if createdTransaction, err = s.Repo.Create(tx, transaction); err != nil {
-		pkg_err.Log(err, "E1626674", "error in creating transaction", transaction)
+		pkg_err.Log(err, "E1171379", "error in creating transaction", transaction)
 		return
 	}
 
@@ -183,17 +183,17 @@ func (s *AccTransactionServ) Create(tx tx.Tx, transaction acc_model.Transaction)
 func (s *AccTransactionServ) Save(tx tx.Tx, transaction acc_model.Transaction) (updatedTransaction, transactionBefore acc_model.Transaction, err error) {
 
 	if err = validator.ValidateModel(transaction, acc_term.Transaction, validator.Update); err != nil {
-		err = pkg_err.TickValidate(err, "E1679868", pkg_err.ValidationFailed, transaction)
+		err = pkg_err.TickValidate(err, "E1151288", pkg_err.ValidationFailed, transaction)
 		return
 	}
 
 	if transactionBefore, err = s.FindByID(tx, transaction.ID); err != nil {
-		pkg_err.Log(err, "E1625869", "can't fetch transaction by id for saving it", transaction.ID)
+		pkg_err.Log(err, "E1168605", "can't fetch transaction by id for saving it", transaction.ID)
 		return
 	}
 
 	if updatedTransaction, err = s.Repo.Save(tx, transaction); err != nil {
-		pkg_err.Log(err, "E1139340", "transaction not saved")
+		pkg_err.Log(err, "E1186552", "transaction not saved")
 		return
 	}
 
@@ -211,12 +211,12 @@ func (s *AccTransactionServ) Save(tx tx.Tx, transaction acc_model.Transaction) (
 func (s *AccTransactionServ) Delete(tx tx.Tx, id uint) (transaction acc_model.Transaction, err error) {
 
 	if transaction, err = s.FindByID(tx, id); err != nil {
-		pkg_err.Log(err, "E1653653", "transaction not found for deleting")
+		pkg_err.Log(err, "E1145937", "transaction not found for deleting")
 		return
 	}
 
 	if err = s.Repo.Delete(tx, transaction); err != nil {
-		pkg_err.Log(err, "E1681259", "transaction not deleted")
+		pkg_err.Log(err, "E1160494", "transaction not deleted")
 		return
 	}
 

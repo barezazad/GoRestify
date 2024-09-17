@@ -52,7 +52,7 @@ func (s *BaseCityServ) GetAll(params param.Param) (cities []base_model.City, err
 		return
 	}
 
-	params.Pagination.Limit = 100000
+	params.Limit = 100000
 	if cities, err = s.Repo.List(params); err != nil {
 		pkg_log.CheckError(err, "error in cities list")
 		return
