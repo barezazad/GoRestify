@@ -37,7 +37,7 @@ func (s *BaseCityServ) FindByID(tx tx.Tx, id uint) (city base_model.City, err er
 	}
 
 	if city, err = s.Repo.FindByID(tx, id); err != nil {
-		pkg_err.Log(err, "E1117192", "can't fetch the city", id)
+		pkg_err.Log(err, "E1135879", "can't fetch the city", id)
 		return
 	}
 
@@ -82,12 +82,12 @@ func (s *BaseCityServ) List(params param.Param) (cities []base_model.City,
 // Create a city
 func (s *BaseCityServ) Create(tx tx.Tx, city base_model.City) (createdCity base_model.City, err error) {
 	if err = validator.ValidateModel(city, base_term.City, validator.Create); err != nil {
-		err = pkg_err.TickValidate(err, "E1159448", pkg_err.ValidationFailed, city)
+		err = pkg_err.TickValidate(err, "E1168371", pkg_err.ValidationFailed, city)
 		return
 	}
 
 	if createdCity, err = s.Repo.Create(tx, city); err != nil {
-		pkg_err.Log(err, "E1175150", "city not saved")
+		pkg_err.Log(err, "E1159963", "city not saved")
 		return
 	}
 
@@ -104,17 +104,17 @@ func (s *BaseCityServ) Create(tx tx.Tx, city base_model.City) (createdCity base_
 // Save a city, if it is exists update it, if not create it
 func (s *BaseCityServ) Save(tx tx.Tx, city base_model.City) (savedCity, cityBefore base_model.City, err error) {
 	if err = validator.ValidateModel(city, base_term.City, validator.Update); err != nil {
-		err = pkg_err.TickValidate(err, "E1147437", pkg_err.ValidationFailed, city)
+		err = pkg_err.TickValidate(err, "E1160475", pkg_err.ValidationFailed, city)
 		return
 	}
 
 	if cityBefore, err = s.FindByID(tx, city.ID); err != nil {
-		pkg_err.Log(err, "E1178144", "can't fetch city by id for saving it", city.ID)
+		pkg_err.Log(err, "E1129301", "can't fetch city by id for saving it", city.ID)
 		return
 	}
 
 	if savedCity, err = s.Repo.Save(tx, city); err != nil {
-		pkg_err.Log(err, "E1128646", "city not saved")
+		pkg_err.Log(err, "E1172044", "city not saved")
 		return
 	}
 
@@ -131,12 +131,12 @@ func (s *BaseCityServ) Save(tx tx.Tx, city base_model.City) (savedCity, cityBefo
 // Delete city
 func (s *BaseCityServ) Delete(tx tx.Tx, id uint) (city base_model.City, err error) {
 	if city, err = s.FindByID(tx, id); err != nil {
-		pkg_err.Log(err, "E1185319", "city not found for deleting")
+		pkg_err.Log(err, "E1132706", "city not found for deleting")
 		return
 	}
 
 	if err = s.Repo.Delete(tx, city); err != nil {
-		pkg_err.Log(err, "E1142739", "city not deleted")
+		pkg_err.Log(err, "E1114278", "city not deleted")
 		return
 	}
 

@@ -46,4 +46,10 @@ const (
 	XIsInactive                                             = "%v is inactive"
 	XFailed                                                 = "%v failed"
 	YouVeExceededTheRateLimitForRequestsPleaseTryAgainLater = "You've exceeded the rate limit for requests. Please try again later"
+	DocumentTypeIsWrong                                     = "document type is wrong"
+	CouldNotDeleteDocuments                                 = "couldn't delete documents"
+	DocumentTypeNotAccepted                                 = "document type not accepted"
+	CouldNotUploadDocument                                  = "couldn't upload document"
+	CanNotUploadMultipleDocument                            = "can't upload multiple document"
+	DocumentDidNotSaved                                     = "document didn't saved"
 )

@@ -20,4 +20,7 @@ const (
 	Auth                      = "auth"
 	UsernameOrPasswordIsWrong = "username or password is wrong"
 	UserLoggedInSuccessfully  = "user logged in successfully"
+
+	Document = "document"
+	Documents = "documents"
 )

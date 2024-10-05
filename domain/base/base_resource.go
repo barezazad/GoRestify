@@ -23,4 +23,7 @@ const (
 
 	UserWrite pkg_types.Resource = "user:write"
 	UserRead  pkg_types.Resource = "user:read"
+
+	DocumentWrite pkg_types.Resource = "document:write"
+	DocumentRead  pkg_types.Resource = "document:read"
 )

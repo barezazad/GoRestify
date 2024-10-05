@@ -39,4 +39,10 @@ const (
 
 	ClearCache     pkg_types.Event = "clear-cache"
 	ClearCacheUser pkg_types.Event = "clear-cache-user"
+
+	CreateDocument pkg_types.Event = "document-create"
+	UpdateDocument pkg_types.Event = "document-update"
+	DeleteDocument pkg_types.Event = "document-delete"
+	ListDocument   pkg_types.Event = "document-list"
+	ViewDocument   pkg_types.Event = "document-view"
 )

@@ -80,3 +80,9 @@ func InitAccAccountCreditAPI(e *core.Engine) acc_api.AccountCreditAPI {
 		acc_api.ProvideAccountCreditAPI)
 	return acc_api.AccountCreditAPI{}
 }
+
+func InitBaseDocumentAPI(e *core.Engine) base_api.DocumentAPI {
+	wire.Build(base_repo.ProvideDocumentRepo, service.ProvideBaseDocumentService,
+		base_api.ProvideDocumentAPI)
+	return base_api.DocumentAPI{}
+}
