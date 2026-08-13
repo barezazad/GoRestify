@@ -1,0 +1,34 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, built with `go test -c`
+*.test
+
+# Dependency directories (remove the comment below to include it)
+*dev.env
+tags
+*.log
+*.zip
+logs/*
+!logs/.gitkeep
+cloud
+~*
+*.jpg
+*.jpeg
+*.png
+.idea
+.vscode
+!GoRestify.jpg
+!GoRestify-logo.jpg
+!GoRestify-logo.png
+tag.md
+changes.md
+
+# JWT RSA keys (generate locally — see sample.env)
+secrets/
+# JWT keys
+secrets/
