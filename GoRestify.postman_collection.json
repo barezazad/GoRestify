@@ -1,1737 +1,2117 @@
 {
-	"info": {
-		"_postman_id": "3cc10cd0-a790-4e48-94d1-90921ecfeab1",
-		"name": "GoRestify",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "26066740"
-	},
-	"item": [
-		{
-			"name": "Admin",
-			"item": [
-				{
-					"name": "Auth",
-					"item": [
-						{
-							"name": "login",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Barez\", function () {",
-											"    var jsonData = pm.response.json();",
-											"    var token = jsonData[\"data\"][\"token\"]",
-											"    pm.environment.set(\"token\", token);",
-											"});",
-											""
-										],
-										"type": "text/javascript"
-									}
-								},
-								{
-									"listen": "prerequest",
-									"script": {
-										"exec": [
-											""
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"auth": {
-									"type": "noauth"
-								},
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"username\": \"admin\",\n    \"password\": \"admin123Aa\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/login",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"login"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Settings",
-					"item": [
-						{
-							"name": "List",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "bearer {{token}}",
-										"type": "text"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"value": "en",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/settings",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"settings"
-									],
-									"query": [
-										{
-											"key": "order_by",
-											"value": "id",
-											"disabled": true
-										},
-										{
-											"key": "direction",
-											"value": "desc",
-											"disabled": true
-										},
-										{
-											"key": "page_size",
-											"value": "10",
-											"disabled": true
-										},
-										{
-											"key": "page",
-											"value": "1",
-											"disabled": true
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Update",
-							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "bearer {{token}}",
-										"type": "text"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"value": "en",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"property\": \"default_language\",\n    \"value\": \"en\",\n    \"description\": \"default language example for setting env\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/settings/1",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"settings",
-										"1"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Activities",
-					"item": [
-						{
-							"name": "List",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "bearer {{token}}",
-										"type": "text"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"value": "en",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/activities",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"activities"
-									],
-									"query": [
-										{
-											"key": "order_by",
-											"value": "id",
-											"disabled": true
-										},
-										{
-											"key": "direction",
-											"value": "desc",
-											"disabled": true
-										},
-										{
-											"key": "page_size",
-											"value": "10",
-											"disabled": true
-										},
-										{
-											"key": "page",
-											"value": "1",
-											"disabled": true
-										}
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Clear Cache",
-					"item": [
-						{
-							"name": "Clear Cache Key",
-							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "bearer {{token}}",
-										"type": "text"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"value": "en",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/clear-cache/region",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"clear-cache",
-										"region"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Clear Cache User",
-							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "bearer {{token}}",
-										"type": "text"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"value": "en",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/clear-cache/user/1",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"clear-cache",
-										"user",
-										"1"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Cities",
-					"item": [
-						{
-							"name": "Find By ID",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "bearer {{token}}",
-										"type": "text"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"value": "en",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/cities/1",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"cities",
-										"1"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "All",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "bearer {{token}}",
-										"type": "text"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"value": "en",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/all/cities",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"all",
-										"cities"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "List",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "bearer {{token}}",
-										"type": "text"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"value": "en",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/cities",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"cities"
-									],
-									"query": [
-										{
-											"key": "filter",
-											"value": "users.name[eq]'barez'[and]users.id[eq]1[or]users.username[like]'barez'",
-											"disabled": true
-										},
-										{
-											"key": "order_by",
-											"value": "id",
-											"disabled": true
-										},
-										{
-											"key": "direction",
-											"value": "desc",
-											"disabled": true
-										},
-										{
-											"key": "page_size",
-											"value": "10",
-											"disabled": true
-										},
-										{
-											"key": "page",
-											"value": "1",
-											"disabled": true
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Craete",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "bearer {{token}}",
-										"type": "text"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"value": "en",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"region_id\":1,\n    \"name\": \"hasaka\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/cities",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"cities"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Update",
-							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "bearer {{token}}",
-										"type": "text"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"value": "en",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"region_id\":1,\n    \"name\": \"hasaka\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/cities/2",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"cities",
-										"2"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Delete",
-							"request": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "bearer {{token}}",
-										"type": "text"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"value": "en",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/cities/2",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"cities",
-										"2"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Regions",
-					"item": [
-						{
-							"name": "Find By ID",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "bearer {{token}}",
-										"type": "text"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"value": "en",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/regions/1",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"regions",
-										"1"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "All",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "bearer {{token}}",
-										"type": "text"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"value": "en",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/all/regions",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"all",
-										"regions"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "List",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "bearer {{token}}",
-										"type": "text"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"value": "en",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/regions?order_by=id&direction=desc&page_size=10",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"regions"
-									],
-									"query": [
-										{
-											"key": "filter",
-											"value": "name[eq]'Region-1'[and]id[eq]1",
-											"disabled": true
-										},
-										{
-											"key": "order_by",
-											"value": "id"
-										},
-										{
-											"key": "direction",
-											"value": "desc"
-										},
-										{
-											"key": "page_size",
-											"value": "10"
-										},
-										{
-											"key": "page",
-											"value": "1",
-											"disabled": true
-										},
-										{
-											"key": "select",
-											"value": "id,name",
-											"disabled": true
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Craete",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "bearer {{token}}",
-										"type": "text"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"value": "en",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"name\": \"Region-2\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/regions",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"regions"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Update",
-							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "bearer {{token}}",
-										"type": "text"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"value": "en",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"name\": \"Region-2\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/regions/2",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"regions",
-										"2"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Delete",
-							"request": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "bearer {{token}}",
-										"type": "text"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"value": "en",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/regions/2",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"regions",
-										"2"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Roles",
-					"item": [
-						{
-							"name": "Find By ID",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "bearer {{token}}",
-										"type": "text"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"value": "en",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/roles/1",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"roles",
-										"1"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "All",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "bearer {{token}}",
-										"type": "text"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"value": "en",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/all/roles",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"all",
-										"roles"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Resources",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "bearer {{token}}",
-										"type": "text"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"value": "en",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/resources",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"resources"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "List",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "bearer {{token}}",
-										"type": "text"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"value": "en",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/roles?order_by=id&direction=desc",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"roles"
-									],
-									"query": [
-										{
-											"key": "order_by",
-											"value": "id"
-										},
-										{
-											"key": "direction",
-											"value": "desc"
-										},
-										{
-											"key": "select",
-											"value": "id,name",
-											"disabled": true
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Craete",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "bearer {{token}}",
-										"type": "text"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"value": "en",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"name\": \"user\",\n    \"resources\": \"activity:read,setting:write,city:write,city:read,region:write,region:read,role:write,role:read,user:write,user:read\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/roles",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"roles"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Update",
-							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "bearer {{token}}",
-										"type": "text"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"value": "en",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"name\": \"user\",\n    \"resources\": \"activity:read,setting:write,city:write,city:read,region:write,region:read,role:write,role:read,user:write,user:read\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/roles/2",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"roles",
-										"2"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Delete",
-							"request": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "bearer {{token}}",
-										"type": "text"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"value": "en",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/roles/2",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"roles",
-										"2"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Accounts",
-					"item": [
-						{
-							"name": "Find By ID",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "bearer {{token}}",
-										"type": "text"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"value": "en",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/accounts/1",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"accounts",
-										"1"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "All",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "bearer {{token}}",
-										"type": "text"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"value": "en",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/all/accounts",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"all",
-										"accounts"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "List",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "bearer {{token}}",
-										"type": "text"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"value": "en",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/accounts?order_by=id&direction=desc&page_size=10",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"accounts"
-									],
-									"query": [
-										{
-											"key": "order_by",
-											"value": "id"
-										},
-										{
-											"key": "direction",
-											"value": "desc"
-										},
-										{
-											"key": "page_size",
-											"value": "10"
-										},
-										{
-											"key": "page",
-											"value": "1",
-											"disabled": true
-										},
-										{
-											"key": "select",
-											"value": "id,name",
-											"disabled": true
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Craete",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "bearer {{token}}",
-										"type": "text"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"value": "en",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "// customer\n{\n    \"full_name\": \"barez azad\",\n    \"username\": \"barez.azad\",\n    \"password\": \"123456Bb@a\",\n    \"email\": \"barez.azad@gmail.com\",\n    \"phone\": \"9647705549911\",\n    \"type\": \"customer\",\n    \"status\": \"active\"\n}\n\n// user\n// {\n//     \"full_name\": \"barez azad\",\n//     \"username\": \"barez.azad\",\n//     \"password\": \"123456Bb@a\",\n//     \"email\": \"barez.azad@gmail.com\",\n//     \"phone\": \"9647705549911\",\n//     \"type\": \"user\",\n//     \"status\": \"active\",\n//     \"role_id\": 2\n// }",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/accounts",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"accounts"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Update",
-							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "bearer {{token}}",
-										"type": "text"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"value": "en",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "// customer\n{\n    \"full_name\": \"barez azad\",\n    \"username\": \"barez.azad\",\n    \"password\": \"123456Bb@a\",\n    \"email\": \"barez.azad@gmail.com\",\n    \"phone\": \"9647705549911\",\n    \"type\": \"customer\",\n    \"status\": \"active\"\n}\n\n// user\n// {\n//     \"full_name\": \"barez azad\",\n//     \"username\": \"barez.azad\",\n//     \"password\": \"123456Bb@a\",\n//     \"email\": \"barez.azad@gmail.com\",\n//     \"phone\": \"9647705549911\",\n//     \"type\": \"user\",\n//     \"status\": \"active\",\n//     \"role_id\": 2\n// }",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/accounts/2",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"accounts",
-										"2"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Delete",
-							"request": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "bearer {{token}}",
-										"type": "text"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"value": "en",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/accounts/2",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"accounts",
-										"2"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Currencies",
-					"item": [
-						{
-							"name": "Find By ID",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "bearer {{token}}",
-										"type": "text"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"value": "en",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/currencies/1",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"currencies",
-										"1"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "All",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "bearer {{token}}",
-										"type": "text"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"value": "en",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/all/currencies",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"all",
-										"currencies"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "List",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "bearer {{token}}",
-										"type": "text"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"value": "en",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/currencies?order_by=id&direction=desc&page_size=10",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"currencies"
-									],
-									"query": [
-										{
-											"key": "order_by",
-											"value": "id"
-										},
-										{
-											"key": "direction",
-											"value": "desc"
-										},
-										{
-											"key": "page_size",
-											"value": "10"
-										},
-										{
-											"key": "page",
-											"value": "1",
-											"disabled": true
-										},
-										{
-											"key": "select",
-											"value": "id,name",
-											"disabled": true
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Craete",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "bearer {{token}}",
-										"type": "text"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"value": "en",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"name\": \"USD\",\n    \"symbol\": \"$\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/currencies",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"currencies"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Update",
-							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "bearer {{token}}",
-										"type": "text"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"value": "en",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"name\": \"USD\",\n    \"symbol\": \"$\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/currencies/2",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"currencies",
-										"2"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Delete",
-							"request": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "bearer {{token}}",
-										"type": "text"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"value": "en",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/currencies/2",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"currencies",
-										"2"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Transactions",
-					"item": [
-						{
-							"name": "Find By ID",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "bearer {{token}}",
-										"type": "text"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"value": "en",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/transactions/1",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"transactions",
-										"1"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "All",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "bearer {{token}}",
-										"type": "text"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"value": "en",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/all/transactions",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"all",
-										"transactions"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "List",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "bearer {{token}}",
-										"type": "text"
-									},
-									{
-										"key": "X-LANGUAGE",
-										"value": "en",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "{{endpoint_go_restify_admin}}/transactions?order_by=id&direction=desc&page_size=10",
-									"host": [
-										"{{endpoint_go_restify_admin}}"
-									],
-									"path": [
-										"transactions"
-									],
-									"query": [
-										{
-											"key": "order_by",
-											"value": "id"
-										},
-										{
-											"key": "direction",
-											"value": "desc"
-										},
-										{
-											"key": "page_size",
-											"value": "10"
-										},
-										{
-											"key": "page",
-											"value": "1",
-											"disabled": true
-										},
-										{
-											"key": "select",
-											"value": "id,name",
-											"disabled": true
-										}
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				}
-			]
-		},
-		{
-			"name": "Public",
-			"item": [
-				{
-					"name": "Cities",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "X-LANGUAGE",
-								"value": "en",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{endpoint_go_restify_user}}/cities",
-							"host": [
-								"{{endpoint_go_restify_user}}"
-							],
-							"path": [
-								"cities"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		}
-	],
-	"event": [
-		{
-			"listen": "prerequest",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		},
-		{
-			"listen": "test",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		}
-	],
-	"variable": [
-		{
-			"key": "endpoint_go_restify_admin",
-			"value": "http://localhost:6969/api/admin/v1",
-			"type": "string"
-		},
-		{
-			"key": "endpoint_go_restify_user",
-			"value": "http://localhost:6969/api/user/v1",
-			"type": "string"
-		}
-	]
+  "info": {
+    "_postman_id": "gorestify-collection-v4",
+    "name": "GoRestify",
+    "description": "Complete GoRestify Postman collection for Admin and User APIs.\n\n## Quick start\n1. Start admin API (`make admin`) on port 6969.\n2. Run **Admin \u2192 Auth \u2192 Login** (auto-saves `token` / `refresh_token`).\n3. Edit path/query params on each request (IDs are per-request, not collection vars).\n\n## Bases\n- Admin: `{{endpoint_go_restify_admin}}` \u2192 `/api/admin/v1`\n- User: `{{endpoint_go_restify_user}}` \u2192 `/api/user/v1`\n\n## Notes\n- User app has **no login**; reuse Admin JWT.\n- Accounts are split: **Users** (`type=user`, requires `role_id`) and **Customers** (`type=customer`).\n- Do not send `type` in body \u2014 routes force it.\n- List query: `page`, `page_size` (max 100), `order_by`, `direction`, `filter`.\n- `POST /transactions` = DoTransaction (balanced slots required).\n- Slots & Account Credits are **read-only** over HTTP.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "Auth",
+          "item": [
+            {
+              "name": "Login",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "if (pm.response.code === 200) {",
+                      "  const j = pm.response.json();",
+                      "  const data = j.data || j;",
+                      "  if (data.token) pm.collectionVariables.set('token', data.token);",
+                      "  if (data.refresh_token) pm.collectionVariables.set('refresh_token', data.refresh_token);",
+                      "}"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"admin123Aa!\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/login",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "login"
+                  ]
+                },
+                "description": "Seeded admin: admin / admin123Aa!. Saves token + refresh_token."
+              },
+              "response": []
+            },
+            {
+              "name": "Refresh Token",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/refresh-token",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "refresh-token"
+                  ]
+                },
+                "description": "Rate-limited. Rotates refresh token.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"refresh_token\": \"{{refresh_token}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Settings",
+          "item": [
+            {
+              "name": "List",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/settings",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "settings"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/settings/:settingID",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "settings",
+                    ":settingID"
+                  ],
+                  "variable": [
+                    {
+                      "key": "settingID",
+                      "value": "1"
+                    }
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"property\": \"default_language\",\n  \"value\": \"en\",\n  \"description\": \"default language\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Activities",
+          "item": [
+            {
+              "name": "List",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/activities?page=1&page_size=10&order_by=id&direction=desc",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "activities"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "10"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "id"
+                    },
+                    {
+                      "key": "direction",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Clear Cache",
+          "item": [
+            {
+              "name": "Clear Cache By Key",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/clear-cache/:key",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "clear-cache",
+                    ":key"
+                  ],
+                  "variable": [
+                    {
+                      "key": "key",
+                      "value": "city"
+                    }
+                  ]
+                },
+                "description": "Examples: city, region, role, user, account, currency, slot, transaction, account credit"
+              },
+              "response": []
+            },
+            {
+              "name": "Clear Cache User",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/clear-cache/user/:userID",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "clear-cache",
+                    "user",
+                    ":userID"
+                  ],
+                  "variable": [
+                    {
+                      "key": "userID",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Login Blocks",
+          "item": [
+            {
+              "name": "List",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/login-blocks",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "login-blocks"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Unblock IP",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/login-blocks/unblock",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "login-blocks",
+                    "unblock"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ip\": \"127.0.0.1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Cities",
+          "item": [
+            {
+              "name": "Find By ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/cities/:cityID",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "cities",
+                    ":cityID"
+                  ],
+                  "variable": [
+                    {
+                      "key": "cityID",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "All",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/all/cities",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "all",
+                    "cities"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "List",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/cities?page=1&page_size=10&order_by=id&direction=desc",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "cities"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "10"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "id"
+                    },
+                    {
+                      "key": "direction",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Excel",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/excel/cities",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "excel",
+                    "cities"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Create",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/cities",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "cities"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"region_id\": 1,\n  \"name\": \"Erbil\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/cities/:cityID",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "cities",
+                    ":cityID"
+                  ],
+                  "variable": [
+                    {
+                      "key": "cityID",
+                      "value": "1"
+                    }
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"region_id\": 1,\n  \"name\": \"Erbil Updated\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/cities/:cityID",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "cities",
+                    ":cityID"
+                  ],
+                  "variable": [
+                    {
+                      "key": "cityID",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Regions",
+          "item": [
+            {
+              "name": "Find By ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/regions/:regionID",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "regions",
+                    ":regionID"
+                  ],
+                  "variable": [
+                    {
+                      "key": "regionID",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "All",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/all/regions",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "all",
+                    "regions"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "List",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/regions?page=1&page_size=10&order_by=id&direction=desc",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "regions"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "10"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "id"
+                    },
+                    {
+                      "key": "direction",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Create",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/regions",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "regions"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Kurdistan\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/regions/:regionID",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "regions",
+                    ":regionID"
+                  ],
+                  "variable": [
+                    {
+                      "key": "regionID",
+                      "value": "1"
+                    }
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Kurdistan Updated\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/regions/:regionID",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "regions",
+                    ":regionID"
+                  ],
+                  "variable": [
+                    {
+                      "key": "regionID",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Roles",
+          "item": [
+            {
+              "name": "Find By ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/roles/:roleID",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "roles",
+                    ":roleID"
+                  ],
+                  "variable": [
+                    {
+                      "key": "roleID",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "All",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/all/roles",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "all",
+                    "roles"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Resources",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/resources",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "resources"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "List",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/roles?page=1&page_size=10&order_by=id&direction=desc",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "roles"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "10"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "id"
+                    },
+                    {
+                      "key": "direction",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Create",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/roles",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "roles"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Operator\",\n  \"resources\": \"city:read,region:read\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/roles/:roleID",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "roles",
+                    ":roleID"
+                  ],
+                  "variable": [
+                    {
+                      "key": "roleID",
+                      "value": "1"
+                    }
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Operator\",\n  \"resources\": \"city:read,city:write,region:read\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/roles/:roleID",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "roles",
+                    ":roleID"
+                  ],
+                  "variable": [
+                    {
+                      "key": "roleID",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Users",
+          "item": [
+            {
+              "name": "Find By ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/users/:userID",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "users",
+                    ":userID"
+                  ],
+                  "variable": [
+                    {
+                      "key": "userID",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "All",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/all/users",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "all",
+                    "users"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "List",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/users?page=1&page_size=10&order_by=id&direction=desc",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "users"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "10"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "id"
+                    },
+                    {
+                      "key": "direction",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Create",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/users",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "users"
+                  ]
+                },
+                "description": "Forces type=user. role_id is required (creates base_users row).",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"full_name\": \"Demo User\",\n  \"username\": \"demouser\",\n  \"password\": \"Demo1234Aa!\",\n  \"email\": \"demo@example.com\",\n  \"phone\": \"9647700000000\",\n  \"status\": \"active\",\n  \"role_id\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/users/:userID",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "users",
+                    ":userID"
+                  ],
+                  "variable": [
+                    {
+                      "key": "userID",
+                      "value": "1"
+                    }
+                  ]
+                },
+                "description": "Forces type=user. Cannot change to customer.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"full_name\": \"Demo User Updated\",\n  \"username\": \"demouser\",\n  \"email\": \"demo@example.com\",\n  \"phone\": \"9647700000000\",\n  \"status\": \"active\",\n  \"role_id\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/users/:userID",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "users",
+                    ":userID"
+                  ],
+                  "variable": [
+                    {
+                      "key": "userID",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "description": "Staff/admin accounts (type=user). Requires role_id."
+        },
+        {
+          "name": "Customers",
+          "item": [
+            {
+              "name": "Find By ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/customers/:customerID",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "customers",
+                    ":customerID"
+                  ],
+                  "variable": [
+                    {
+                      "key": "customerID",
+                      "value": "2"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "All",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/all/customers",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "all",
+                    "customers"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "List",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/customers?page=1&page_size=10&order_by=id&direction=desc",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "customers"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "10"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "id"
+                    },
+                    {
+                      "key": "direction",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Create",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/customers",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "customers"
+                  ]
+                },
+                "description": "Forces type=customer. No role_id.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"full_name\": \"Demo Customer\",\n  \"username\": \"democustomer\",\n  \"password\": \"Demo1234Aa!\",\n  \"email\": \"customer@example.com\",\n  \"phone\": \"9647700000001\",\n  \"status\": \"active\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/customers/:customerID",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "customers",
+                    ":customerID"
+                  ],
+                  "variable": [
+                    {
+                      "key": "customerID",
+                      "value": "2"
+                    }
+                  ]
+                },
+                "description": "Forces type=customer. Cannot change to user.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"full_name\": \"Demo Customer Updated\",\n  \"username\": \"democustomer\",\n  \"email\": \"customer@example.com\",\n  \"phone\": \"9647700000001\",\n  \"status\": \"active\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/customers/:customerID",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "customers",
+                    ":customerID"
+                  ],
+                  "variable": [
+                    {
+                      "key": "customerID",
+                      "value": "2"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "description": "Customer accounts (type=customer). No role linkage."
+        },
+        {
+          "name": "Currencies",
+          "item": [
+            {
+              "name": "Find By ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/currencies/:currencyID",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "currencies",
+                    ":currencyID"
+                  ],
+                  "variable": [
+                    {
+                      "key": "currencyID",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "All",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/all/currencies",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "all",
+                    "currencies"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "List",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/currencies?page=1&page_size=10&order_by=id&direction=desc",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "currencies"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "10"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "id"
+                    },
+                    {
+                      "key": "direction",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Create",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/currencies",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "currencies"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"US Dollar\",\n  \"symbol\": \"USD\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/currencies/:currencyID",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "currencies",
+                    ":currencyID"
+                  ],
+                  "variable": [
+                    {
+                      "key": "currencyID",
+                      "value": "1"
+                    }
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"US Dollar\",\n  \"symbol\": \"USD\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/currencies/:currencyID",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "currencies",
+                    ":currencyID"
+                  ],
+                  "variable": [
+                    {
+                      "key": "currencyID",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Transactions",
+          "item": [
+            {
+              "name": "Find By ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/transactions/:transactionID",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "transactions",
+                    ":transactionID"
+                  ],
+                  "variable": [
+                    {
+                      "key": "transactionID",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "All",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/all/transactions",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "all",
+                    "transactions"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "List",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/transactions?page=1&page_size=10&order_by=id&direction=desc",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "transactions"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "10"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "id"
+                    },
+                    {
+                      "key": "direction",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Create (DoTransaction)",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/transactions",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "transactions"
+                  ]
+                },
+                "description": "DoTransaction: sum(debit)==sum(credit)==amount; slot currency must match; accounts must be sender or receiver. Optional hash for idempotency.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sender_id\": 1,\n  \"receiver_id\": 2,\n  \"currency_id\": 1,\n  \"type\": \"transfer\",\n  \"hash\": \"\",\n  \"amount\": \"100.000000\",\n  \"fee\": \"0.000000\",\n  \"note\": \"sample transfer\",\n  \"description\": \"balanced ledger post\",\n  \"created_by\": 1,\n  \"slots\": [\n    {\n      \"account_id\": 1,\n      \"currency_id\": 1,\n      \"debit\": \"0.000000\",\n      \"credit\": \"100.000000\",\n      \"notes\": \"sender outflow\"\n    },\n    {\n      \"account_id\": 2,\n      \"currency_id\": 1,\n      \"debit\": \"100.000000\",\n      \"credit\": \"0.000000\",\n      \"notes\": \"receiver inflow\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            }
+          ],
+          "description": "Write only via Create/DoTransaction."
+        },
+        {
+          "name": "Slots",
+          "item": [
+            {
+              "name": "Find By ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/slots/:slotID",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "slots",
+                    ":slotID"
+                  ],
+                  "variable": [
+                    {
+                      "key": "slotID",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "All",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/all/slots",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "all",
+                    "slots"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "List",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/slots?page=1&page_size=10&order_by=id&direction=desc",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "slots"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "10"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "id"
+                    },
+                    {
+                      "key": "direction",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "description": "Read-only ledger lines."
+        },
+        {
+          "name": "Account Credits",
+          "item": [
+            {
+              "name": "Find By ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/account-credits/:accountCreditID",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "account-credits",
+                    ":accountCreditID"
+                  ],
+                  "variable": [
+                    {
+                      "key": "accountCreditID",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "All",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/all/account-credits",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "all",
+                    "account-credits"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "List",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/account-credits?page=1&page_size=10&order_by=id&direction=desc",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "account-credits"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "10"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "id"
+                    },
+                    {
+                      "key": "direction",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "description": "Read-only balances."
+        }
+      ],
+      "description": "Admin API /api/admin/v1"
+    },
+    {
+      "name": "User",
+      "item": [
+        {
+          "name": "Cities",
+          "item": [
+            {
+              "name": "All Cities",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_user}}/cities",
+                  "host": [
+                    "{{endpoint_go_restify_user}}"
+                  ],
+                  "path": [
+                    "cities"
+                  ]
+                },
+                "description": "Only user route today. JWT required (login via Admin Auth)."
+              },
+              "response": []
+            }
+          ]
+        }
+      ],
+      "description": "User API /api/user/v1 \u2014 limited surface."
+    }
+  ],
+  "variable": [
+    {
+      "key": "endpoint_go_restify_admin",
+      "value": "http://127.0.0.1:6969/api/admin/v1"
+    },
+    {
+      "key": "endpoint_go_restify_user",
+      "value": "http://127.0.0.1:6969/api/user/v1"
+    },
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "refresh_token",
+      "value": ""
+    }
+  ]
 }

@@ -12,6 +12,7 @@ import (
 	"GoRestify/pkg/pkg_err"
 	"GoRestify/pkg/pkg_log"
 	"GoRestify/pkg/pkg_password"
+	"GoRestify/pkg/pkg_types"
 	"GoRestify/pkg/tx"
 
 	"GoRestify/pkg/validator"
@@ -31,6 +32,10 @@ func ProvideBaseAccountService(accountRepo base_repo.AccountRepo) BaseAccountSer
 	}
 }
 
+func accountsCacheKey(accountType pkg_types.Enum) string {
+	return fmt.Sprintf("%v-%v", base_term.Accounts, accountType)
+}
+
 // FindByID for getting account by its id
 func (s *BaseAccountServ) FindByID(tx tx.Tx, id uint) (account base_model.Account, err error) {
 
@@ -41,6 +46,30 @@ func (s *BaseAccountServ) FindByID(tx tx.Tx, id uint) (account base_model.Accoun
 
 	if account, err = s.Repo.FindByID(tx, id); err != nil {
 		pkg_err.Log(err, "E1133637", "can't fetch the account", id)
+		return
+	}
+
+	err = s.Engine.RedisCacheAPI.Set(key, account)
+
+	return
+}
+
+// FindByIDAndType for getting account by its id and type
+func (s *BaseAccountServ) FindByIDAndType(tx tx.Tx, id uint, accountType pkg_types.Enum) (account base_model.Account, err error) {
+
+	key := fmt.Sprintf("%v-%v", base_term.Account, id)
+	if ok := s.Engine.RedisCacheAPI.GetCache(tx, key, &account); ok {
+		if account.Type != accountType {
+			err = pkg_err.New(pkg_err.RecordNotFound, "E1178401").
+				Custom(pkg_err.NotFoundErr).Message(pkg_err.RecordNotFound).Build()
+			account = base_model.Account{}
+			return
+		}
+		return
+	}
+
+	if account, err = s.Repo.FindByIDAndType(tx, id, string(accountType)); err != nil {
+		pkg_err.Log(err, "E1178402", "can't fetch the account by type", id, accountType)
 		return
 	}
 
@@ -81,6 +110,28 @@ func (s *BaseAccountServ) GetAll(params param.Param) (accounts []base_model.Acco
 	return
 }
 
+// GetAllByType of accounts for a given type without filter, order, or pagination
+func (s *BaseAccountServ) GetAllByType(params param.Param, accountType pkg_types.Enum) (accounts []base_model.Account, err error) {
+
+	cacheKey := accountsCacheKey(accountType)
+	if ok := s.Engine.RedisCacheAPI.GetCache(params.Tx, cacheKey, &accounts); ok {
+		return
+	}
+
+	if accounts, err = s.Repo.GetAllByType(string(accountType)); err != nil {
+		pkg_log.CheckError(err, "error in accounts list by type")
+		return
+	}
+
+	for i := range accounts {
+		accounts[i].Password = ""
+	}
+
+	err = s.Engine.RedisCacheAPI.Set(cacheKey, accounts)
+
+	return
+}
+
 // List of accounts, it supports pagination and search and return count
 func (s *BaseAccountServ) List(params param.Param) (accounts []base_model.Account,
 	count int64, err error) {
@@ -101,12 +152,34 @@ func (s *BaseAccountServ) List(params param.Param) (accounts []base_model.Accoun
 	return
 }
 
+// ListByType lists accounts filtered by type, with pagination and search
+func (s *BaseAccountServ) ListByType(params param.Param, accountType pkg_types.Enum) (accounts []base_model.Account,
+	count int64, err error) {
+
+	if err = params.AddPreCondition("base_accounts.type = ?", string(accountType)); err != nil {
+		pkg_err.Log(err, "E1178403", "invalid account type precondition", accountType)
+		return
+	}
+
+	return s.List(params)
+}
+
 // Create a account
 func (s *BaseAccountServ) Create(tx tx.Tx, account base_model.Account) (createdAccount base_model.Account, err error) {
 
 	if err = validator.ValidateModel(account, base_term.Account, validator.Create); err != nil {
 		err = pkg_err.TickValidate(err, "E1192923", pkg_err.ValidationFailed, account)
 		return
+	}
+
+	if account.Type == account_type.User && account.RoleID == 0 {
+		err = pkg_err.New("role_id is required for user accounts", "E1178404").
+			Custom(pkg_err.ValidationFailedErr).Message("role_id is required for user accounts").Build()
+		return
+	}
+
+	if account.Type == account_type.Customer {
+		account.RoleID = 0
 	}
 
 	if account.Password, err = pkg_password.Hash(account.Password, s.Engine.Envs[core.PasswordSalt]); err != nil {
@@ -133,6 +206,7 @@ func (s *BaseAccountServ) Create(tx tx.Tx, account base_model.Account) (createdA
 	}
 
 	s.Engine.RedisCacheAPI.Delete(base_term.Accounts)
+	s.Engine.RedisCacheAPI.Delete(accountsCacheKey(account.Type))
 
 	return
 }
@@ -145,9 +219,26 @@ func (s *BaseAccountServ) Save(tx tx.Tx, account base_model.Account) (updatedAcc
 		return
 	}
 
-	if accountBefore, err = s.FindByID(tx, account.ID); err != nil {
-		pkg_err.Log(err, "E1124905", "can't fetch account by id for saving it", account.ID)
+	if account.Type != "" {
+		if accountBefore, err = s.FindByIDAndType(tx, account.ID, account.Type); err != nil {
+			pkg_err.Log(err, "E1124905", "can't fetch account by id and type for saving it", account.ID, account.Type)
+			return
+		}
+	} else if accountBefore, err = s.FindByID(tx, account.ID); err != nil {
+		pkg_err.Log(err, "E1124906", "can't fetch account by id for saving it", account.ID)
 		return
+	}
+
+	account.Type = accountBefore.Type
+
+	if account.Type == account_type.User && account.RoleID == 0 {
+		err = pkg_err.New("role_id is required for user accounts", "E1178406").
+			Custom(pkg_err.ValidationFailedErr).Message("role_id is required for user accounts").Build()
+		return
+	}
+
+	if account.Type == account_type.Customer {
+		account.RoleID = 0
 	}
 
 	if account.Password != "" {
@@ -183,6 +274,7 @@ func (s *BaseAccountServ) Save(tx tx.Tx, account base_model.Account) (updatedAcc
 	}
 
 	s.Engine.RedisCacheAPI.Delete(base_term.Accounts)
+	s.Engine.RedisCacheAPI.Delete(accountsCacheKey(account.Type))
 
 	return
 }
@@ -203,6 +295,28 @@ func (s *BaseAccountServ) Delete(tx tx.Tx, id uint) (account base_model.Account,
 	key := fmt.Sprintf("%v-%v", base_term.Account, account.ID)
 	s.Engine.RedisCacheAPI.Delete(key)
 	s.Engine.RedisCacheAPI.Delete(base_term.Accounts)
+	s.Engine.RedisCacheAPI.Delete(accountsCacheKey(account.Type))
+
+	return
+}
+
+// DeleteByType deletes an account only when it matches the given type
+func (s *BaseAccountServ) DeleteByType(tx tx.Tx, id uint, accountType pkg_types.Enum) (account base_model.Account, err error) {
+
+	if account, err = s.FindByIDAndType(tx, id, accountType); err != nil {
+		pkg_err.Log(err, "E1178407", "account not found for deleting by type")
+		return
+	}
+
+	if err = s.Repo.Delete(tx, account); err != nil {
+		pkg_err.Log(err, "E1178408", "account not deleted")
+		return
+	}
+
+	key := fmt.Sprintf("%v-%v", base_term.Account, account.ID)
+	s.Engine.RedisCacheAPI.Delete(key)
+	s.Engine.RedisCacheAPI.Delete(base_term.Accounts)
+	s.Engine.RedisCacheAPI.Delete(accountsCacheKey(account.Type))
 
 	return
 }

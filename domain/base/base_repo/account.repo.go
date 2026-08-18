@@ -40,9 +40,28 @@ func (r *AccountRepo) FindByID(tx tx.Tx, id uint) (account base_model.Account, e
 	return
 }
 
+// FindByIDAndType finds the account via its id and type
+func (r *AccountRepo) FindByIDAndType(tx tx.Tx, id uint, accountType string) (account base_model.Account, err error) {
+	err = tx.GetDB(r.Engine.DB, true).Table(base_model.AccountTable).
+		Where("id = ? AND type = ?", id, accountType).
+		First(&account).Error
+
+	err = db_error.Parse(err, base_term.Accounts, validator.Find)
+	return
+}
+
 // GetAll returns all accounts without filter, order, or pagination
 func (r *AccountRepo) GetAll() (accounts []base_model.Account, err error) {
 	err = r.Engine.DB.Table(base_model.AccountTable).Find(&accounts).Error
+	err = db_error.Parse(err, base_term.Accounts, validator.List)
+	return
+}
+
+// GetAllByType returns all accounts of a given type without filter, order, or pagination
+func (r *AccountRepo) GetAllByType(accountType string) (accounts []base_model.Account, err error) {
+	err = r.Engine.DB.Table(base_model.AccountTable).
+		Where("type = ?", accountType).
+		Find(&accounts).Error
 	err = db_error.Parse(err, base_term.Accounts, validator.List)
 	return
 }

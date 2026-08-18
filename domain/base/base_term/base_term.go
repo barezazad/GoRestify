@@ -17,6 +17,9 @@ const (
 	User  = "user"
 	Users = "users"
 
+	Customer  = "customer"
+	Customers = "customers"
+
 	Auth                      = "auth"
 	UsernameOrPasswordIsWrong = "username or password is wrong"
 	UserLoggedInSuccessfully  = "user logged in successfully"

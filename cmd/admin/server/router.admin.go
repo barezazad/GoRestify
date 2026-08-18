@@ -74,12 +74,19 @@ func Route(rg gin.RouterGroup, engine *core.Engine) {
 		rg.PUT("/roles/:roleID", check_access.IsAllow(base.RoleWrite), baseRoleAPI.Update)
 		rg.DELETE("/roles/:roleID", check_access.IsAllow(base.RoleWrite), baseRoleAPI.Delete)
 
-		rg.GET("/accounts", check_access.IsAllow(base.AccountRead), baseAccountAPI.List)
-		rg.GET("/all/accounts", check_access.IsAllow(base.AccountRead), baseAccountAPI.GetAll)
-		rg.GET("/accounts/:accountID", check_access.IsAllow(base.AccountRead), baseAccountAPI.FindByID)
-		rg.POST("/accounts", check_access.IsAllow(base.AccountWrite), baseAccountAPI.Create)
-		rg.PUT("/accounts/:accountID", check_access.IsAllow(base.AccountWrite), baseAccountAPI.Update)
-		rg.DELETE("/accounts/:accountID", check_access.IsAllow(base.AccountWrite), baseAccountAPI.Delete)
+		rg.GET("/users", check_access.IsAllow(base.AccountRead), baseAccountAPI.ListUsers)
+		rg.GET("/all/users", check_access.IsAllow(base.AccountRead), baseAccountAPI.GetAllUsers)
+		rg.GET("/users/:userID", check_access.IsAllow(base.AccountRead), baseAccountAPI.FindUserByID)
+		rg.POST("/users", check_access.IsAllow(base.AccountWrite), baseAccountAPI.CreateUser)
+		rg.PUT("/users/:userID", check_access.IsAllow(base.AccountWrite), baseAccountAPI.UpdateUser)
+		rg.DELETE("/users/:userID", check_access.IsAllow(base.AccountWrite), baseAccountAPI.DeleteUser)
+
+		rg.GET("/customers", check_access.IsAllow(base.AccountRead), baseAccountAPI.ListCustomers)
+		rg.GET("/all/customers", check_access.IsAllow(base.AccountRead), baseAccountAPI.GetAllCustomers)
+		rg.GET("/customers/:customerID", check_access.IsAllow(base.AccountRead), baseAccountAPI.FindCustomerByID)
+		rg.POST("/customers", check_access.IsAllow(base.AccountWrite), baseAccountAPI.CreateCustomer)
+		rg.PUT("/customers/:customerID", check_access.IsAllow(base.AccountWrite), baseAccountAPI.UpdateCustomer)
+		rg.DELETE("/customers/:customerID", check_access.IsAllow(base.AccountWrite), baseAccountAPI.DeleteCustomer)
 
 		// acc domain
 		rg.GET("/currencies", check_access.IsAllow(acc.CurrencyRead), accCurrencyAPI.List)
