@@ -223,6 +223,31 @@
           "name": "Clear Cache",
           "item": [
             {
+              "name": "List Keys",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{endpoint_go_restify_admin}}/clear-cache/keys",
+                  "host": [
+                    "{{endpoint_go_restify_admin}}"
+                  ],
+                  "path": [
+                    "clear-cache",
+                    "keys"
+                  ]
+                },
+                "description": "Returns clearable cache keys for UI. Pick one and call Clear Cache By Key."
+              },
+              "response": []
+            },
+            {
               "name": "Clear Cache By Key",
               "request": {
                 "method": "PUT",
@@ -249,7 +274,7 @@
                     }
                   ]
                 },
-                "description": "Examples: city, region, role, user, account, currency, slot, transaction, account credit"
+                "description": "Clear one key from GET /clear-cache/keys (e.g. city, region, role, user, account, currency, slot, transaction, account credit)."
               },
               "response": []
             },

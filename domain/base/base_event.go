@@ -39,6 +39,7 @@ const (
 
 	ClearCache     pkg_types.Event = "clear-cache"
 	ClearCacheUser pkg_types.Event = "clear-cache-user"
+	ListCacheKeys  pkg_types.Event = "cache-key-list"
 	ListLoginBlock pkg_types.Event = "login-block-list"
 	UnblockLogin   pkg_types.Event = "login-unblock"
 

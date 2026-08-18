@@ -12,6 +12,7 @@ const (
 	Activities  = "activities"
 	LoginBlocks = "login blocks"
 	IP          = "ip"
+	Keys        = "keys"
 
 	VCreatedSuccessfully   = "%v created successfully"
 	VUpdatedSuccessfully   = "%v updated successfully"

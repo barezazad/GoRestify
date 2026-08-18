@@ -44,6 +44,7 @@ func Route(rg gin.RouterGroup, engine *core.Engine) {
 
 		rg.GET("/activities", check_access.IsAllow(base.ActivityRead), PkgAPI.ActivitiesList)
 
+		rg.GET("/clear-cache/keys", check_access.IsAllow(base.SettingWrite), PkgAPI.RedisCacheKeyList)
 		rg.PUT("/clear-cache/:key", check_access.IsAllow(base.SettingWrite), PkgAPI.RedisResetCacheByKey)
 		rg.PUT("/clear-cache/user/:userID", check_access.IsAllow(base.SettingWrite), PkgAPI.RedisClearCacheToUser)
 

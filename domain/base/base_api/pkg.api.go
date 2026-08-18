@@ -4,6 +4,7 @@ import (
 	"GoRestify/domain/acc/acc_term"
 	"GoRestify/domain/base"
 	"GoRestify/domain/base/base_term"
+	"GoRestify/domain/base/enum/account_type"
 	"GoRestify/internal/core"
 	"fmt"
 	"net/http"
@@ -104,6 +105,28 @@ func (a *PkgAPI) ActivitiesList(c *gin.Context) {
 
 // ------------------------------------------ Redis Cache APIs ------------------------------------------
 
+// RedisCacheKeyList returns clearable cache keys for UI selection.
+func (a *PkgAPI) RedisCacheKeyList(c *gin.Context) {
+	resp, _ := response.NewParam(c, models.SettingTable)
+
+	keys := []string{
+		base_term.Region,
+		base_term.City,
+		base_term.Role,
+		base_term.User,
+		base_term.Account,
+		acc_term.Currency,
+		acc_term.Slot,
+		acc_term.Transaction,
+		acc_term.AccountCredit,
+	}
+
+	resp.Record(base.ListCacheKeys)
+	resp.Status(http.StatusOK).
+		Message(pkg_terms.ListOfV, pkg_terms.Keys).
+		JSON(keys)
+}
+
 // RedisResetCacheByKey reset redis cache api
 func (a *PkgAPI) RedisResetCacheByKey(c *gin.Context) {
 	resp, _ := response.NewParam(c, models.SettingTable)
@@ -132,6 +155,8 @@ func (a *PkgAPI) RedisResetCacheByKey(c *gin.Context) {
 	case base_term.Account:
 		keyPattern = fmt.Sprintf("%v-*", base_term.Account)
 		a.Engine.RedisCacheAPI.Delete(base_term.Accounts)
+		a.Engine.RedisCacheAPI.Delete(fmt.Sprintf("%v-%v", base_term.Accounts, account_type.User))
+		a.Engine.RedisCacheAPI.Delete(fmt.Sprintf("%v-%v", base_term.Accounts, account_type.Customer))
 
 	case acc_term.Currency:
 		keyPattern = fmt.Sprintf("%v-*", acc_term.Currency)
