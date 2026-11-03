@@ -156,7 +156,7 @@ func (s *BaseAccountServ) List(params param.Param) (accounts []base_model.Accoun
 func (s *BaseAccountServ) ListByType(params param.Param, accountType pkg_types.Enum) (accounts []base_model.Account,
 	count int64, err error) {
 
-	if err = params.AddPreCondition("base_accounts.type = ?", string(accountType)); err != nil {
+	if err = params.SetPreCondition("base_accounts.type = ?", accountType); err != nil {
 		pkg_err.Log(err, "E1178403", "invalid account type precondition", accountType)
 		return
 	}

@@ -82,7 +82,9 @@ func generateOrder(c *gin.Context, param *Param, table string) {
 	param.Order = orderBy + " " + direction
 }
 
-// readFilter reads the filter query value from RawQuery.
+// readFilter reads the list filter from the query string.
+// filter= keeps the bracket DSL. match= is the WAF-safe form and is rewritten
+// into that same DSL. When both are present, filter wins.
 // Go's url.ParseQuery skips any key=value that contains a raw ';', which would
 // silently drop injection payloads like ...1; DROP TABLE... — so we parse it ourselves.
 func readFilter(c *gin.Context) string {
@@ -91,23 +93,48 @@ func readFilter(c *gin.Context) string {
 		return ""
 	}
 
+	if value, ok := rawQueryValue(raw, "filter"); ok {
+		return value
+	}
+	if value, ok := rawQueryValue(raw, "match"); ok {
+		translated, err := translateMatch(value)
+		if err != nil {
+			return value
+		}
+		return translated
+	}
+
+	if value := strings.TrimSpace(c.Query("filter")); value != "" {
+		return value
+	}
+	if value := strings.TrimSpace(c.Query("match")); value != "" {
+		translated, err := translateMatch(value)
+		if err != nil {
+			return value
+		}
+		return translated
+	}
+	return ""
+}
+
+func rawQueryValue(raw, want string) (string, bool) {
 	for _, part := range strings.Split(raw, "&") {
 		if part == "" {
 			continue
 		}
 		key, value, _ := strings.Cut(part, "=")
 		key, err := url.QueryUnescape(key)
-		if err != nil || key != "filter" {
+		if err != nil || key != want {
 			continue
 		}
 		value, err = url.QueryUnescape(value)
 		if err != nil {
 			continue
 		}
-		return strings.TrimSpace(value)
+		return strings.TrimSpace(value), true
 	}
+	return "", false
 
-	return strings.TrimSpace(c.Query("filter"))
 }
 
 func generateSelectedColumns(c *gin.Context, param *Param) {

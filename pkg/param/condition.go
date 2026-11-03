@@ -18,19 +18,29 @@ func (c Condition) Empty() bool {
 	return strings.TrimSpace(c.Query) == ""
 }
 
-// SetPreCondition sets a developer-owned parameterized precondition.
+// SetPreCondition replaces the developer-owned parameterized precondition.
 // query must use ? for values; args count must match; unsafe SQL tokens are rejected.
 func (p *Param) SetPreCondition(query string, args ...interface{}) error {
 	query = strings.TrimSpace(query)
 	if err := validateCondition(query, args); err != nil {
 		return err
 	}
+
 	p.PreCondition = Condition{Query: query, Args: args}
 	return nil
 }
 
-// AddPreCondition ANDs another parameterized condition onto PreCondition.
-func (p *Param) AddPreCondition(query string, args ...interface{}) error {
+// AddAndPreCondition ANDs another parameterized condition onto PreCondition.
+func (p *Param) AddAndPreCondition(query string, args ...interface{}) error {
+	return p.joinPreCondition("AND", query, args...)
+}
+
+// AddOrPreCondition ORs another parameterized condition onto PreCondition.
+func (p *Param) AddOrPreCondition(query string, args ...interface{}) error {
+	return p.joinPreCondition("OR", query, args...)
+}
+
+func (p *Param) joinPreCondition(op, query string, args ...interface{}) error {
 	query = strings.TrimSpace(query)
 	if err := validateCondition(query, args); err != nil {
 		return err
@@ -41,7 +51,7 @@ func (p *Param) AddPreCondition(query string, args ...interface{}) error {
 		return nil
 	}
 
-	p.PreCondition.Query = "(" + p.PreCondition.Query + ") AND (" + query + ")"
+	p.PreCondition.Query = "(" + p.PreCondition.Query + ") " + op + " (" + query + ")"
 	p.PreCondition.Args = append(p.PreCondition.Args, args...)
 	return nil
 }

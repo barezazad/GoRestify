@@ -2,6 +2,7 @@ package pkg_sql
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 
 	"GoRestify/pkg/pkg_err"
@@ -81,12 +82,16 @@ func Parser(str string, cols []string) (query string, args []interface{}, err er
 			left := col
 
 			switch opToken {
+
 			case "DATE", "DATE_GTE", "DATE_LTE":
 				left = fmt.Sprintf("DATE(%s)", col)
+
+			case "LIKE":
+				value = "%" + strings.Trim(value, "%") + "%"
 			}
 
 			parts = append(parts, left, sqlOp, "?")
-			args = append(args, value)
+			args = append(args, filterValue(opToken, col, value))
 			col = ""
 			opToken = ""
 		}
@@ -99,6 +104,31 @@ func Parser(str string, cols []string) (query string, args []interface{}, err er
 	}
 
 	return "(" + strings.Join(parts, " ") + ")", args, nil
+}
+
+// filterValue binds id columns as integers so MySQL can use the numeric index.
+// Other values stay strings. LIKE and date operators always stay strings.
+func filterValue(opToken, col, value string) interface{} {
+	if opToken == "LIKE" || opToken == "DATE" || opToken == "DATE_GTE" || opToken == "DATE_LTE" || !idColumn(col) {
+		return value
+	}
+	if len(value) > 1 && value[0] == '0' {
+		return value
+	}
+	n, err := strconv.ParseInt(value, 10, 64)
+	if err != nil {
+		return value
+	}
+	return n
+}
+
+func idColumn(col string) bool {
+	name := col
+	if i := strings.LastIndex(name, "."); i >= 0 {
+		name = name[i+1:]
+	}
+	name = strings.Trim(name, "`")
+	return name == "id" || strings.HasSuffix(name, "_id")
 }
 
 func buildColumnMap(cols []string) map[string]string {
