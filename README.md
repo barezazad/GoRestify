@@ -31,7 +31,7 @@
 6. [Authentication & security](#authentication--security)
 7. [RBAC (resources)](#rbac-resources)
 8. [Building APIs the GoRestify way](#building-apis-the-gorestify-way)
-9. [List / GetAll / filters / pagination](#list--getall--filters--pagination)
+9. [List / GetAll / match / pagination](#list--getall--match--pagination)
 10. [Validation (`bind` tags)](#validation-bind-tags)
 11. [Errors & error codes](#errors--error-codes)
 12. [Responses & activity log](#responses--activity-log)
@@ -64,10 +64,10 @@ Most Go boilerplates stop at “hello Gin + GORM”. GoRestify is opinionated ab
 | ------------- | --------------------- | ---------------------------------------------------------- |
 | Auth          | HS256 secret in env   | **RS256** PEM keys, access + **refresh rotation** in Redis |
 | Login abuse   | Often none            | **Progressive rate limit** + admin unblock APIs            |
-| List filters  | String-concat SQL     | **Parameterized** DSL + column/operator allow-lists        |
+| List match    | String-concat SQL     | **Parameterized** WAF-safe `match=` DSL + allow-lists      |
 | ORDER BY      | Raw query params      | Regex allow-list (`column` / `table.column`)               |
 | Pagination    | Unbounded             | `page_size` **max 100**                                    |
-| Get-all       | Huge `LIMIT` hack     | Real repo **`GetAll()`** (no filter/order/limit)           |
+| Get-all       | Huge `LIMIT` hack     | Real repo **`GetAll()`** (no match/order/limit)            |
 | Passwords     | Weak / cost 10        | Policy (10+ + complexity) + bcrypt **cost 12** + salt      |
 | Errors        | Plain strings         | Structured `pkg_err` + unique **`E#######`** codes         |
 | Permissions   | Role string only      | **Resource RBAC** (`city:read`, `role:write`, …)           |
@@ -305,7 +305,7 @@ whereStr, whereArgs, err := params.ParseWhereDelete(r.Cols)
 db.Where(whereStr, whereArgs...).Order(params.Order).Limit(params.Limit).Offset(params.Offset)
 ```
 
-**Never** concatenate user input into SQL. Use `?` + args. `ParseWhereDelete` wraps filters so `OR` cannot bypass `deleted_at IS NULL`.
+**Never** concatenate user input into SQL. Use `?` + args. `ParseWhereDelete` wraps match clauses so `OR` cannot bypass `deleted_at IS NULL`.
 
 ### Service preconditions
 
@@ -320,12 +320,12 @@ Must use `?` placeholders; unsafe tokens are rejected.
 
 ---
 
-## List / GetAll / filters / pagination
+## List / GetAll / match / pagination
 
-| Endpoint style    | Service/Repo | Behavior                                             |
-| ----------------- | ------------ | ---------------------------------------------------- |
-| `GET /cities`     | `List`       | Filter + order + page                                |
-| `GET /all/cities` | `GetAll`     | All rows, **no** filter/order/limit (cache-friendly) |
+| Endpoint style    | Service/Repo | Behavior                                            |
+| ----------------- | ------------ | --------------------------------------------------- |
+| `GET /cities`     | `List`       | Match + order + page                                |
+| `GET /all/cities` | `GetAll`     | All rows, **no** match/order/limit (cache-friendly) |
 
 ### Query params (`List`)
 
@@ -336,23 +336,29 @@ Must use `?` placeholders; unsafe tokens are rejected.
 | `order_by`  | `{table}.id` | Only `col` or `table.col`      |
 | `direction` | `desc`       | Only `asc` / `desc`            |
 | `select`    | `*`          | Validated against repo columns |
-| `filter`    | empty        | DSL below                      |
+| `match`     | empty        | WAF-safe DSL below             |
 
-### Filter DSL
+### Match DSL
+
+Use query param `match=` only (the old `filter=` bracket DSL is not accepted).
+
+A clause is `column.operator.value`. Use `,` for AND and `~or~` for OR.
 
 ```text
-filter=name[eq]"Erbil"[and]id[gt]"1"
-filter=name[like]"%erb%"[or]id[eq]"2"
+match=name.eq.Erbil,id.gt.1
+match=name.like.%erb%~or~id.eq.2
+match=status.eq.active,city_id.eq.12
 ```
 
-| Token                             | Meaning      |
+| Operator                          | Meaning      |
 | --------------------------------- | ------------ |
-| `[eq] [ne] [gt] [lt] [gte] [lte]` | Comparisons  |
-| `[like]`                          | LIKE         |
-| `[and] [or]`                      | Logic        |
-| `[date] [date_gte] [date_lte]`    | Date helpers |
+| `eq` `ne` `gt` `lt` `gte` `lte`   | Comparisons  |
+| `like`                            | LIKE         |
+| `,`                               | AND          |
+| `~or~`                            | OR           |
+| `date` `date_gte` `date_lte`       | Date helpers |
 
-Filters are parsed into `WHERE ... ?` with bound args. Invalid columns/operators/values → validation error (not silent SQL).
+`match` is rewritten internally into a parameterized `WHERE ... ?` with bound args. Invalid columns/operators/values → validation error (not silent SQL). Values must not contain `'`, `"`, `[`, or `]`.
 
 ---
 
@@ -500,7 +506,7 @@ Repos use `tx.GetDB(r.Engine.DB)` so the same code path works with or without an
 | Package                | What backend devs use it for                                      |
 | ---------------------- | ----------------------------------------------------------------- |
 | `pkg_config`           | Global config after `pkg.Init`                                    |
-| `pkg_sql`              | MySQL connect, filter parser, FK SQL, column extract              |
+| `pkg_sql`              | MySQL connect, match/DSL parser, FK SQL, column extract           |
 | `pkg_redis`            | Cache, TTL, pattern reset, refresh-token storage                  |
 | `pkg_jwt`              | RS256 issue / parse / refresh                                     |
 | `pkg_password`         | Hash / verify                                                     |

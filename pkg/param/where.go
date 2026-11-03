@@ -33,13 +33,13 @@ func (p *Param) parseWhere(cols []string) (whereStr string, args []interface{}, 
 	return
 }
 
-// ParseWhere combines preConditions and filter into a parameterized WHERE clause.
+// ParseWhere combines preConditions and match into a parameterized WHERE clause.
 func (p *Param) ParseWhere(cols []string) (whereStr string, args []interface{}, err error) {
 	return p.parseWhere(cols)
 }
 
 // ParseWhereDelete is used when the table has deleted_at column.
-// User/filter clauses are wrapped so OR filters cannot bypass soft-delete.
+// User/match clauses are wrapped so OR conditions cannot bypass soft-delete.
 func (p *Param) ParseWhereDelete(cols []string) (whereStr string, args []interface{}, err error) {
 	if whereStr, args, err = p.parseWhere(cols); err != nil {
 		return

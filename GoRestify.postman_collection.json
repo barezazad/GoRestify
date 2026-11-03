@@ -2,7 +2,7 @@
   "info": {
     "_postman_id": "gorestify-collection-v4",
     "name": "GoRestify",
-    "description": "Complete GoRestify Postman collection for Admin and User APIs.\n\n## Quick start\n1. Start admin API (`make admin`) on port 6969.\n2. Run **Admin \u2192 Auth \u2192 Login** (auto-saves `token` / `refresh_token`).\n3. Edit path/query params on each request (IDs are per-request, not collection vars).\n\n## Bases\n- Admin: `{{endpoint_go_restify_admin}}` \u2192 `/api/admin/v1`\n- User: `{{endpoint_go_restify_user}}` \u2192 `/api/user/v1`\n\n## Notes\n- User app has **no login**; reuse Admin JWT.\n- Accounts are split: **Users** (`type=user`, requires `role_id`) and **Customers** (`type=customer`).\n- Do not send `type` in body \u2014 routes force it.\n- List query: `page`, `page_size` (max 100), `order_by`, `direction`, `filter`.\n- `POST /transactions` = DoTransaction (balanced slots required).\n- Slots & Account Credits are **read-only** over HTTP.",
+    "description": "Complete GoRestify Postman collection for Admin and User APIs.\n\n## Quick start\n1. Start admin API (`make admin`) on port 6969.\n2. Run **Admin \u2192 Auth \u2192 Login** (auto-saves `token` / `refresh_token`).\n3. Edit path/query params on each request (IDs are per-request, not collection vars).\n\n## Bases\n- Admin: `{{endpoint_go_restify_admin}}` \u2192 `/api/admin/v1`\n- User: `{{endpoint_go_restify_user}}` \u2192 `/api/user/v1`\n\n## Notes\n- User app has **no login**; reuse Admin JWT.\n- Accounts are split: **Users** (`type=user`, requires `role_id`) and **Customers** (`type=customer`).\n- Do not send `type` in body \u2014 routes force it.\n- List query: `page`, `page_size` (max 100), `order_by`, `direction`, `match` (e.g. `name.eq.Erbil,id.gt.1`; `~or~` for OR).\n- `POST /transactions` = DoTransaction (balanced slots required).\n- Slots & Account Credits are **read-only** over HTTP.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
@@ -208,8 +208,8 @@
                       "value": "desc"
                     },
                     {
-                      "key": "filter",
-                      "value": "",
+                      "key": "match",
+                      "value": "name.eq.Erbil",
                       "disabled": true
                     }
                   ]
@@ -471,8 +471,8 @@
                       "value": "desc"
                     },
                     {
-                      "key": "filter",
-                      "value": "",
+                      "key": "match",
+                      "value": "name.eq.Erbil",
                       "disabled": true
                     }
                   ]
@@ -711,8 +711,8 @@
                       "value": "desc"
                     },
                     {
-                      "key": "filter",
-                      "value": "",
+                      "key": "match",
+                      "value": "name.eq.Erbil",
                       "disabled": true
                     }
                   ]
@@ -950,8 +950,8 @@
                       "value": "desc"
                     },
                     {
-                      "key": "filter",
-                      "value": "",
+                      "key": "match",
+                      "value": "name.eq.Erbil",
                       "disabled": true
                     }
                   ]
@@ -1166,8 +1166,8 @@
                       "value": "desc"
                     },
                     {
-                      "key": "filter",
-                      "value": "",
+                      "key": "match",
+                      "value": "name.eq.Erbil",
                       "disabled": true
                     }
                   ]
@@ -1385,8 +1385,8 @@
                       "value": "desc"
                     },
                     {
-                      "key": "filter",
-                      "value": "",
+                      "key": "match",
+                      "value": "name.eq.Erbil",
                       "disabled": true
                     }
                   ]
@@ -1604,8 +1604,8 @@
                       "value": "desc"
                     },
                     {
-                      "key": "filter",
-                      "value": "",
+                      "key": "match",
+                      "value": "name.eq.Erbil",
                       "disabled": true
                     }
                   ]
@@ -1820,8 +1820,8 @@
                       "value": "desc"
                     },
                     {
-                      "key": "filter",
-                      "value": "",
+                      "key": "match",
+                      "value": "name.eq.Erbil",
                       "disabled": true
                     }
                   ]
@@ -1964,8 +1964,8 @@
                       "value": "desc"
                     },
                     {
-                      "key": "filter",
-                      "value": "",
+                      "key": "match",
+                      "value": "name.eq.Erbil",
                       "disabled": true
                     }
                   ]
@@ -2070,8 +2070,8 @@
                       "value": "desc"
                     },
                     {
-                      "key": "filter",
-                      "value": "",
+                      "key": "match",
+                      "value": "name.eq.Erbil",
                       "disabled": true
                     }
                   ]

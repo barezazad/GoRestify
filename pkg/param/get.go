@@ -24,7 +24,7 @@ func Get(c *gin.Context, table string) (param Param) {
 	generateLimit(c, &param)
 	generateOffset(c, &param)
 
-	param.Filter = readFilter(c)
+	param.Filter = readMatch(c)
 
 	userID, ok := c.Get("USER_ID")
 	if ok {
@@ -82,20 +82,16 @@ func generateOrder(c *gin.Context, param *Param, table string) {
 	param.Order = orderBy + " " + direction
 }
 
-// readFilter reads the list filter from the query string.
-// filter= keeps the bracket DSL. match= is the WAF-safe form and is rewritten
-// into that same DSL. When both are present, filter wins.
+// readMatch reads the WAF-safe match= query param and rewrites it into the
+// internal bracket DSL used by pkg_sql.Parser.
 // Go's url.ParseQuery skips any key=value that contains a raw ';', which would
 // silently drop injection payloads like ...1; DROP TABLE... — so we parse it ourselves.
-func readFilter(c *gin.Context) string {
+func readMatch(c *gin.Context) string {
 	raw := c.Request.URL.RawQuery
 	if raw == "" {
 		return ""
 	}
 
-	if value, ok := rawQueryValue(raw, "filter"); ok {
-		return value
-	}
 	if value, ok := rawQueryValue(raw, "match"); ok {
 		translated, err := translateMatch(value)
 		if err != nil {
@@ -104,9 +100,6 @@ func readFilter(c *gin.Context) string {
 		return translated
 	}
 
-	if value := strings.TrimSpace(c.Query("filter")); value != "" {
-		return value
-	}
 	if value := strings.TrimSpace(c.Query("match")); value != "" {
 		translated, err := translateMatch(value)
 		if err != nil {

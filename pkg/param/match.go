@@ -22,7 +22,7 @@ var matchOperators = []string{
 
 var matchColumnRE = regexp.MustCompile(`^[A-Za-z_][A-Za-z0-9_]*(\.[A-Za-z_][A-Za-z0-9_]*)*$`)
 
-// translateMatch rewrites the WAF-safe match DSL into the bracket filter DSL.
+// translateMatch rewrites the WAF-safe match DSL into the internal bracket DSL.
 // A clause is column.operator.value. A comma is AND and ~or~ is OR.
 // status.eq.active,city_id.eq.12 → status[eq]'active'[and]city_id[eq]'12'
 func translateMatch(raw string) (string, error) {
